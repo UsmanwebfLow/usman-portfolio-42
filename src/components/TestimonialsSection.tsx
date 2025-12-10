@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import GradientFillHeading from './GradientFillHeading';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -9,12 +9,12 @@ gsap.registerPlugin(ScrollTrigger);
 const testimonials = [
   {
     number: '01',
-    text: "One of the best template I've ever had. I love it! It's fully customizable, well coded, fast and responsive - fitting for all kind of devices.",
+    text: "One of the best template I've ever had. I love it! It's fully customizable, well coded, fast and responsive.",
     author: '— Wironimo',
   },
   {
     number: '02',
-    text: "Brilliant template. Tons of options, many concepts, design flexibility, code quality, explanatory comments in each section for easy styling.",
+    text: "Brilliant template. Tons of options, many concepts, design flexibility, code quality.",
     author: '— Gneto',
   },
   {
@@ -29,13 +29,12 @@ const testimonials = [
   },
   {
     number: '05',
-    text: "I found a bug on iPhone and iPad and the author fixed it very quickly. I appreciated his efforts and fast response.",
+    text: "I found a bug on iPhone and iPad and the author fixed it very quickly.",
     author: '— Admante',
   },
 ];
 
 export default function TestimonialsSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -75,18 +74,23 @@ export default function TestimonialsSection() {
   return (
     <section 
       id="testimonials"
-      className="relative py-32 px-6 section-muted overflow-hidden"
+      className="relative py-32 px-6 section-muted"
     >
-      <div className="max-w-3xl mx-auto">
-        <div className="mb-16 text-center">
+      <div className="max-w-2xl mx-auto">
+        <div className="text-center mb-16">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-heading text-xs tracking-[0.3em] text-foreground-soft mb-4 block"
+          >
+            CLIENT FEEDBACK
+          </motion.span>
           <GradientFillHeading text="TESTIMONIALS" />
         </div>
         
-        <div 
-          ref={containerRef}
-          className="relative space-y-10"
-          style={{ '--cards-count': testimonials.length } as React.CSSProperties}
-        >
+        <div className="relative space-y-8">
           {testimonials.map((testimonial, index) => (
             <div
               key={testimonial.number}
@@ -101,18 +105,15 @@ export default function TestimonialsSection() {
                 viewport={{ once: true }}
                 className="testimonial-card relative"
               >
-                {/* Number badge */}
-                <span className="absolute top-4 left-4 text-lg font-semibold text-foreground-soft">
+                <span className="absolute top-6 left-6 text-base font-heading tracking-wider text-foreground-muted/50">
                   {testimonial.number}
                 </span>
                 
-                {/* Quote */}
-                <p className="text-lg leading-relaxed italic text-foreground-muted mt-8 mb-4">
+                <p className="text-base md:text-lg leading-relaxed italic text-foreground-soft mt-10 mb-4">
                   "{testimonial.text}"
                 </p>
                 
-                {/* Author */}
-                <span className="text-sm text-foreground-soft">
+                <span className="text-xs tracking-wider text-foreground-muted">
                   {testimonial.author}
                 </span>
               </motion.div>

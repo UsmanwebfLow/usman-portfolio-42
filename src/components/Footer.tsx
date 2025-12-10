@@ -5,17 +5,20 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="relative py-16 px-6 section-darker border-t border-border">
+    <footer className="relative py-12 px-6 section-darker border-t border-border">
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          {/* Logo / Brand */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          {/* Logo */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
+            className="flex items-center gap-2"
           >
-            <span className="text-display text-3xl text-foreground">PORTFOLIO</span>
+            <div className="w-8 h-8 border border-foreground flex items-center justify-center">
+              <span className="text-heading text-xs tracking-widest">JD</span>
+            </div>
           </motion.div>
           
           {/* Social links */}
@@ -24,22 +27,16 @@ export default function Footer() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
             viewport={{ once: true }}
-            className="flex gap-4"
+            className="flex gap-6"
           >
-            {[
-              { icon: Github, href: '#' },
-              { icon: Linkedin, href: '#' },
-              { icon: Twitter, href: '#' },
-              { icon: Instagram, href: '#' },
-            ].map((social, index) => (
+            {[Github, Linkedin, Twitter, Instagram].map((Icon, index) => (
               <motion.a
                 key={index}
-                href={social.href}
-                whileHover={{ scale: 1.1, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-foreground-muted hover:text-primary hover:border-primary transition-colors"
+                href="#"
+                whileHover={{ y: -3 }}
+                className="text-foreground-muted hover:text-foreground transition-colors"
               >
-                <social.icon className="w-5 h-5" />
+                <Icon className="w-4 h-4" />
               </motion.a>
             ))}
           </motion.div>
@@ -50,9 +47,9 @@ export default function Footer() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-foreground-soft text-sm"
+            className="text-foreground-soft text-xs tracking-wider"
           >
-            © {currentYear} All rights reserved.
+            © {currentYear} ALL RIGHTS RESERVED
           </motion.p>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, Suspense, lazy } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Lenis from '@studio-freight/lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -12,105 +12,68 @@ import TestimonialsSection from '@/components/TestimonialsSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 
-// Lazy load the 3D scene for better performance
-const Scene3D = lazy(() => import('@/components/Scene3D'));
-
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Index() {
   const [scrollProgress, setScrollProgress] = useState(0);
-  const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    // Initialize Lenis smooth scroll
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       smoothWheel: true,
     });
-    
-    lenisRef.current = lenis;
 
-    // Connect Lenis to GSAP ScrollTrigger
     lenis.on('scroll', () => {
       ScrollTrigger.update();
-      
-      // Calculate scroll progress for 3D scene
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = window.scrollY / scrollHeight;
       setScrollProgress(progress);
     });
 
-    // Animation frame for Lenis
     function raf(time: number) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
 
-    return () => {
-      lenis.destroy();
-    };
+    return () => lenis.destroy();
   }, []);
 
   return (
     <>
-      {/* 3D Scene - Fixed background */}
-      <Suspense fallback={null}>
-        <Scene3D scrollProgress={scrollProgress} />
-      </Suspense>
-
-      {/* Navigation */}
       <Navbar />
-
-      {/* Main content */}
-      <main className="relative z-10">
+      
+      <div id="scroll-container" className="relative">
         <HeroSection />
-        <AboutSection />
-        <ServicesSection />
-        <WorkSection />
-        <ToolsSection />
-        <TestimonialsSection />
-        <ContactSection />
-        <Footer />
-      </main>
+        
+        <main className="relative z-10 bg-background">
+          <AboutSection />
+          <ServicesSection />
+          <WorkSection />
+          <ToolsSection />
+          <TestimonialsSection />
+          <ContactSection />
+          <Footer />
+        </main>
+      </div>
 
-      {/* Scroll progress indicator */}
-      <div className="fixed bottom-8 right-8 z-50">
-        <svg width="60" height="60" viewBox="0 0 60 60">
+      {/* Scroll progress */}
+      <div className="fixed bottom-8 right-8 z-50 hidden md:block">
+        <svg width="50" height="50" viewBox="0 0 50 50">
+          <circle cx="25" cy="25" r="22" fill="none" stroke="hsl(0 0% 15%)" strokeWidth="1" />
           <circle
-            cx="30"
-            cy="30"
-            r="26"
+            cx="25" cy="25" r="22"
             fill="none"
-            stroke="hsl(var(--border))"
-            strokeWidth="2"
-          />
-          <circle
-            cx="30"
-            cy="30"
-            r="26"
-            fill="none"
-            stroke="hsl(var(--primary))"
-            strokeWidth="3"
+            stroke="hsl(0 0% 98%)"
+            strokeWidth="1.5"
             strokeLinecap="round"
-            strokeDasharray={`${2 * Math.PI * 26}`}
-            strokeDashoffset={`${2 * Math.PI * 26 * (1 - scrollProgress)}`}
-            style={{
-              transform: 'rotate(-90deg)',
-              transformOrigin: 'center',
-              filter: 'drop-shadow(0 0 6px hsl(var(--primary)))',
-            }}
+            strokeDasharray={`${2 * Math.PI * 22}`}
+            strokeDashoffset={`${2 * Math.PI * 22 * (1 - scrollProgress)}`}
+            style={{ transform: 'rotate(-90deg)', transformOrigin: 'center' }}
           />
-          <text
-            x="30"
-            y="34"
-            textAnchor="middle"
-            fill="hsl(var(--foreground))"
-            fontSize="12"
-            fontFamily="var(--font-body)"
-          >
+          <text x="25" y="28" textAnchor="middle" fill="hsl(0 0% 98%)" fontSize="9" fontFamily="Inter">
             {Math.round(scrollProgress * 100)}%
           </text>
         </svg>

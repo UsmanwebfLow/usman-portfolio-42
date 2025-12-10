@@ -4,15 +4,11 @@ import { motion } from 'framer-motion';
 interface GradientFillHeadingProps {
   text: string;
   className?: string;
-  startThreshold?: number;
-  endThreshold?: number;
 }
 
 export default function GradientFillHeading({ 
   text, 
   className = '',
-  startThreshold = 0,
-  endThreshold = 100 
 }: GradientFillHeadingProps) {
   const [fillPercent, setFillPercent] = useState(0);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -24,19 +20,14 @@ export default function GradientFillHeading({
       const rect = wrapperRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       
-      // Calculate visibility percentage
-      const elementTop = rect.top;
-      const elementHeight = rect.height;
-      
-      // Start filling when element enters viewport
       const startFillPoint = windowHeight * 0.8;
       const endFillPoint = windowHeight * 0.2;
       
-      if (elementTop <= startFillPoint && elementTop >= endFillPoint - elementHeight) {
-        const progress = (startFillPoint - elementTop) / (startFillPoint - endFillPoint);
+      if (rect.top <= startFillPoint && rect.top >= endFillPoint - rect.height) {
+        const progress = (startFillPoint - rect.top) / (startFillPoint - endFillPoint);
         const clampedProgress = Math.min(Math.max(progress * 100, 0), 100);
         setFillPercent(clampedProgress);
-      } else if (elementTop < endFillPoint - elementHeight) {
+      } else if (rect.top < endFillPoint - rect.height) {
         setFillPercent(100);
       } else {
         setFillPercent(0);
@@ -44,10 +35,10 @@ export default function GradientFillHeading({
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
+    handleScroll();
     
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [startThreshold, endThreshold]);
+  }, []);
 
   return (
     <motion.div 
@@ -59,12 +50,12 @@ export default function GradientFillHeading({
       viewport={{ once: true }}
     >
       <div 
-        className="gradient-fill-text text-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl"
+        className="gradient-fill-text text-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl tracking-wider"
         style={{ backgroundSize: `${fillPercent}% 100%` }}
       >
         {text}
       </div>
-      <div className="gradient-fill-outline text-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
+      <div className="gradient-fill-outline text-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl tracking-wider">
         {text}
       </div>
     </motion.div>

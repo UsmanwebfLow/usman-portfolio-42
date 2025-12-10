@@ -43,13 +43,19 @@ export default function ContactSection() {
   return (
     <section 
       id="contact"
-      className="relative py-32 px-6 section-dark overflow-hidden"
+      className="relative py-32 px-6 section-dark"
     >
-      {/* Background elements */}
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[200px]" />
-      
       <div className="max-w-6xl mx-auto">
-        <div className="mb-16 text-center">
+        <div className="text-center mb-16">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-heading text-xs tracking-[0.3em] text-foreground-soft mb-4 block"
+          >
+            GET IN TOUCH
+          </motion.span>
           <GradientFillHeading text="LET'S TALK" />
         </div>
         
@@ -62,14 +68,9 @@ export default function ContactSection() {
             viewport={{ once: true }}
             className="space-y-8"
           >
-            <div>
-              <h3 className="text-heading text-3xl text-foreground mb-4">
-                Ready to Start Your Project?
-              </h3>
-              <p className="text-foreground-muted text-lg">
-                Let's collaborate and bring your vision to life. I'm always excited to work on new and challenging projects.
-              </p>
-            </div>
+            <p className="text-body-light text-lg text-foreground-muted leading-relaxed">
+              Ready to start your project? Let's collaborate and bring your vision to life.
+            </p>
             
             <div className="space-y-6">
               {[
@@ -83,14 +84,14 @@ export default function ContactSection() {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="flex items-center gap-4"
+                  className="flex items-center gap-6"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <item.icon className="w-5 h-5 text-primary" />
+                  <div className="w-12 h-12 border border-border flex items-center justify-center">
+                    <item.icon className="w-5 h-5 text-foreground" />
                   </div>
                   <div>
-                    <div className="text-sm text-foreground-soft">{item.label}</div>
-                    <div className="text-foreground font-medium">{item.value}</div>
+                    <div className="text-xs text-foreground-soft tracking-wider uppercase">{item.label}</div>
+                    <div className="text-foreground">{item.value}</div>
                   </div>
                 </motion.div>
               ))}
@@ -105,79 +106,60 @@ export default function ContactSection() {
             viewport={{ once: true }}
           >
             {/* Credit Card */}
-            <div className="credit-card-wrapper mb-[-60px] relative z-10">
-              <div 
-                className={`credit-card w-full h-[220px] relative ${isFlipped ? 'flipped' : ''}`}
-              >
+            <div className="credit-card-wrapper mb-[-50px] relative z-10">
+              <div className={`credit-card w-full h-[200px] relative ${isFlipped ? 'flipped' : ''}`}>
                 {/* Front */}
                 <div className="credit-card-face credit-card-front text-foreground">
-                  {/* Logo */}
-                  <div className="absolute top-4 right-6 flex">
-                    <div className="w-8 h-8 rounded-full bg-orange-500/80" />
-                    <div className="w-8 h-8 rounded-full bg-yellow-500/80 -ml-3" />
+                  <div className="absolute top-4 right-5 flex">
+                    <div className="w-7 h-7 rounded-full bg-white/80" />
+                    <div className="w-7 h-7 rounded-full bg-white/40 -ml-3" />
                   </div>
                   
-                  {/* Chip */}
-                  <div className="w-12 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg mb-5 relative overflow-hidden">
-                    <div className="absolute top-1/2 left-1 right-1 h-px bg-black/20" />
-                    <div className="absolute top-1 bottom-1 left-1/2 w-px bg-black/20" />
-                  </div>
+                  <div className="w-10 h-8 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded mb-4" />
                   
-                  {/* Card Number */}
-                  <div className="text-xl font-mono tracking-widest mb-6">
+                  <div className="text-lg font-mono tracking-widest mb-4">
                     {formData.cardNumber || '•••• •••• •••• ••••'}
                   </div>
                   
-                  {/* Details */}
                   <div className="flex justify-between items-end">
                     <div>
-                      <div className="text-[10px] opacity-70 uppercase tracking-wider mb-1">Card Holder</div>
-                      <div className="text-sm font-semibold uppercase tracking-wider">
+                      <div className="text-[9px] opacity-60 uppercase tracking-wider mb-1">Card Holder</div>
+                      <div className="text-xs font-medium uppercase tracking-wider">
                         {formData.cardHolder || 'YOUR NAME'}
                       </div>
                     </div>
                     <div>
-                      <div className="text-[10px] opacity-70 uppercase tracking-wider mb-1">Expires</div>
-                      <div className="text-sm font-semibold">
-                        {formData.expiry || 'MM/YY'}
-                      </div>
+                      <div className="text-[9px] opacity-60 uppercase tracking-wider mb-1">Expires</div>
+                      <div className="text-xs font-medium">{formData.expiry || 'MM/YY'}</div>
                     </div>
                   </div>
                 </div>
                 
                 {/* Back */}
                 <div className="credit-card-face credit-card-back text-foreground">
-                  {/* Magnetic strip */}
-                  <div className="absolute top-6 left-0 right-0 h-12 bg-gradient-to-r from-neutral-900 via-neutral-700 to-neutral-900" />
+                  <div className="absolute top-5 left-0 right-0 h-10 bg-black/50" />
                   
-                  {/* CVV */}
-                  <div className="mt-24 flex items-center gap-4">
-                    <span className="text-xs opacity-70 uppercase tracking-wider">CVV</span>
-                    <div className="flex-1 h-10 bg-white rounded-md flex items-center justify-end pr-4">
-                      <span className="text-lg font-mono text-black/80 italic tracking-widest">
+                  <div className="mt-20 flex items-center gap-4">
+                    <span className="text-[9px] opacity-60 uppercase tracking-wider">CVV</span>
+                    <div className="flex-1 h-8 bg-white rounded flex items-center justify-end pr-3">
+                      <span className="text-sm font-mono text-black/80 italic tracking-widest">
                         {formData.cvv || '•••'}
                       </span>
                     </div>
-                  </div>
-                  
-                  {/* Logo */}
-                  <div className="absolute bottom-4 right-6 flex">
-                    <div className="w-6 h-6 rounded-full bg-orange-500/80" />
-                    <div className="w-6 h-6 rounded-full bg-yellow-500/80 -ml-2" />
                   </div>
                 </div>
               </div>
             </div>
             
             {/* Form */}
-            <div className="bg-foreground/95 rounded-3xl p-8 pt-20 shadow-elevated">
-              <h4 className="text-2xl font-heading text-background text-center mb-6">
-                Payment Details
+            <div className="bg-foreground/95 p-8 pt-16">
+              <h4 className="text-xl font-heading tracking-wider text-background text-center mb-6">
+                PAYMENT DETAILS
               </h4>
               
-              <form className="space-y-5">
+              <form className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-background/60 uppercase tracking-wider mb-2">
+                  <label className="block text-[10px] font-medium text-background/50 uppercase tracking-wider mb-2">
                     Card Number
                   </label>
                   <input
@@ -186,12 +168,12 @@ export default function ContactSection() {
                     onChange={(e) => handleInputChange('cardNumber', e.target.value)}
                     placeholder="1234 5678 9012 3456"
                     maxLength={19}
-                    className="w-full px-4 py-3 rounded-xl bg-background/10 border border-background/20 text-background placeholder:text-background/40 focus:outline-none focus:border-primary"
+                    className="w-full px-4 py-3 bg-background/10 border border-background/20 text-background placeholder:text-background/30 focus:outline-none focus:border-background/50"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-xs font-semibold text-background/60 uppercase tracking-wider mb-2">
+                  <label className="block text-[10px] font-medium text-background/50 uppercase tracking-wider mb-2">
                     Card Holder Name
                   </label>
                   <input
@@ -199,13 +181,13 @@ export default function ContactSection() {
                     value={formData.cardHolder}
                     onChange={(e) => handleInputChange('cardHolder', e.target.value)}
                     placeholder="John Doe"
-                    className="w-full px-4 py-3 rounded-xl bg-background/10 border border-background/20 text-background placeholder:text-background/40 focus:outline-none focus:border-primary"
+                    className="w-full px-4 py-3 bg-background/10 border border-background/20 text-background placeholder:text-background/30 focus:outline-none focus:border-background/50"
                   />
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-background/60 uppercase tracking-wider mb-2">
+                    <label className="block text-[10px] font-medium text-background/50 uppercase tracking-wider mb-2">
                       Expiry Date
                     </label>
                     <input
@@ -214,11 +196,11 @@ export default function ContactSection() {
                       onChange={(e) => handleInputChange('expiry', e.target.value)}
                       placeholder="MM/YY"
                       maxLength={5}
-                      className="w-full px-4 py-3 rounded-xl bg-background/10 border border-background/20 text-background placeholder:text-background/40 focus:outline-none focus:border-primary"
+                      className="w-full px-4 py-3 bg-background/10 border border-background/20 text-background placeholder:text-background/30 focus:outline-none focus:border-background/50"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-background/60 uppercase tracking-wider mb-2">
+                    <label className="block text-[10px] font-medium text-background/50 uppercase tracking-wider mb-2">
                       CVV
                     </label>
                     <input
@@ -229,11 +211,8 @@ export default function ContactSection() {
                       onBlur={() => setIsFlipped(false)}
                       placeholder="•••"
                       maxLength={4}
-                      className="w-full px-4 py-3 rounded-xl bg-background/10 border border-background/20 text-background placeholder:text-background/40 focus:outline-none focus:border-primary"
+                      className="w-full px-4 py-3 bg-background/10 border border-background/20 text-background placeholder:text-background/30 focus:outline-none focus:border-background/50"
                     />
-                    <span className="text-[10px] text-background/40 mt-1 block">
-                      Focus to see card back
-                    </span>
                   </div>
                 </div>
                 
@@ -241,10 +220,10 @@ export default function ContactSection() {
                   type="submit"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full py-4 rounded-xl bg-primary text-primary-foreground font-semibold text-lg flex items-center justify-center gap-2 mt-4"
+                  className="w-full py-4 bg-background text-foreground font-heading tracking-wider flex items-center justify-center gap-3 mt-4 hover:bg-background/90 transition-colors"
                 >
-                  <Send className="w-5 h-5" />
-                  Send Message
+                  <Send className="w-4 h-4" />
+                  SEND MESSAGE
                 </motion.button>
               </form>
             </div>
