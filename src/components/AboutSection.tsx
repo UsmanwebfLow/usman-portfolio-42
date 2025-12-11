@@ -1,5 +1,13 @@
 import { motion } from 'framer-motion';
 import GradientFillHeading from './GradientFillHeading';
+import { Download, MapPin, Mail, Phone } from 'lucide-react';
+
+const stats = [
+  { value: '50+', label: 'Projects Completed' },
+  { value: '30+', label: 'Happy Clients' },
+  { value: '3+', label: 'Years Experience' },
+  { value: '100%', label: 'Client Satisfaction' },
+];
 
 export default function AboutSection() {
   return (
@@ -21,8 +29,8 @@ export default function AboutSection() {
               ABOUT ME
             </motion.span>
             
-            <GradientFillHeading text="CREATIVE" className="mb-2" />
-            <GradientFillHeading text="DESIGNER" className="mb-2" />
+            <GradientFillHeading text="WORDPRESS" className="mb-2" />
+            <GradientFillHeading text="DEVELOPER" className="mb-2" />
             
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -31,8 +39,28 @@ export default function AboutSection() {
               viewport={{ once: true }}
               className="text-heading text-xl md:text-2xl tracking-[0.1em] text-foreground-muted mt-6"
             >
-              BASED IN MELBOURNE
+              BASED IN LAHORE, PAKISTAN
             </motion.p>
+            
+            {/* Contact Info */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="mt-10 space-y-3"
+            >
+              {[
+                { icon: Mail, text: 'usman755781@gmail.com' },
+                { icon: Phone, text: '+92 3259 438 262' },
+                { icon: MapPin, text: 'Darogawala, Lahore' },
+              ].map((item, idx) => (
+                <div key={idx} className="flex items-center gap-3 text-foreground-muted">
+                  <item.icon className="w-4 h-4 text-accent" />
+                  <span className="text-sm">{item.text}</span>
+                </div>
+              ))}
+            </motion.div>
           </div>
           
           {/* Right: Description */}
@@ -44,8 +72,8 @@ export default function AboutSection() {
               viewport={{ once: true }}
               className="text-body-light text-lg md:text-xl text-foreground-muted leading-relaxed mb-8"
             >
-              I am dedicated to developing innovative solutions and impactful 
-              experiences that meet user needs and exceed expectations.
+              Motivated and detail-oriented developer specializing in WordPress, 
+              GoHighLevel, ClickFunnels, and automation workflows using tools like n8n.
             </motion.p>
             
             <motion.p
@@ -55,25 +83,54 @@ export default function AboutSection() {
               viewport={{ once: true }}
               className="text-body-light text-base text-foreground-soft leading-relaxed mb-12"
             >
-              With expertise in WordPress development, funnel building, and workflow 
-              automation, I help businesses transform their digital presence and 
-              streamline their operations.
+              Skilled in creating responsive websites, building high-converting funnels, 
+              and designing clean UI/UX using Figma and Canva. Currently working with 
+              Power Pack Technologies, contributing to modern digital solutions that 
+              boost business performance.
             </motion.p>
             
-            <motion.a
-              href="#work"
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
               viewport={{ once: true }}
-              whileHover={{ x: 10 }}
-              className="inline-flex items-center gap-4 text-heading text-sm tracking-[0.2em] text-foreground group"
+              className="flex flex-wrap gap-4"
             >
-              READ MORE
-              <span className="w-12 h-px bg-foreground group-hover:w-20 transition-all duration-300" />
-            </motion.a>
+              <a
+                href="/resume.pdf"
+                download="Usman_Ali_Resume.pdf"
+                className="inline-flex items-center gap-3 px-6 py-3 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-all duration-300 text-heading text-xs tracking-[0.2em]"
+              >
+                <Download className="w-4 h-4" />
+                DOWNLOAD CV
+              </a>
+              
+              <a
+                href="#work"
+                className="inline-flex items-center gap-4 px-6 py-3 text-heading text-xs tracking-[0.2em] text-foreground group"
+              >
+                VIEW WORK
+                <span className="w-8 h-px bg-foreground group-hover:w-12 transition-all duration-300" />
+              </a>
+            </motion.div>
           </div>
         </div>
+        
+        {/* Stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          viewport={{ once: true }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-24 pt-16 border-t border-border"
+        >
+          {stats.map((stat, idx) => (
+            <div key={idx} className="text-center">
+              <span className="text-display text-4xl md:text-5xl text-foreground">{stat.value}</span>
+              <p className="text-xs tracking-[0.2em] text-foreground-muted mt-2 uppercase">{stat.label}</p>
+            </div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );
