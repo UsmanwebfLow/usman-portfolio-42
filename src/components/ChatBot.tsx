@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Calendar, Loader2 } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -35,10 +35,106 @@ const expertise = {
   },
 };
 
+const marketingStrategies = {
+  leadCapture: `**Landing Page Lead Capture Strategy:**
+
+For capturing leads effectively, I implement a comprehensive approach:
+
+**1. High-Converting Landing Page Design**
+• Clean, distraction-free layout with single CTA focus
+• Compelling headline addressing the visitor's pain point
+• Social proof (testimonials, client logos, case studies)
+• Clear value proposition above the fold
+
+**2. Lead Magnet Strategy**
+• Free resource (ebook, checklist, template)
+• Exclusive webinar or training access
+• Free consultation/audit offer
+• Discount or special offer
+
+**3. Form Optimization**
+• Minimal fields (name, email, phone)
+• Progress indicators for multi-step forms
+• Exit-intent popups for abandoning visitors
+• A/B testing different form placements
+
+**4. Follow-up Automation**
+• Immediate welcome email sequence
+• SMS follow-up (if phone provided)
+• Retargeting ads for non-converters
+• Lead scoring and nurturing workflow
+
+**5. Traffic Generation**
+• Paid ads (Facebook, Google, LinkedIn)
+• SEO-optimized content marketing
+• Social media campaigns
+• Referral programs
+
+Would you like me to create a custom lead capture funnel for your business?`,
+  
+  conversion: `**Conversion Optimization Tactics:**
+
+**1. Trust Building**
+• Display client testimonials prominently
+• Show real results with case studies
+• Add trust badges and certifications
+• Include money-back guarantee
+
+**2. Urgency & Scarcity**
+• Limited-time offers with countdown timers
+• Limited spots/availability messaging
+• Early bird pricing tiers
+• Exclusive bonuses for quick action
+
+**3. Clear Value Communication**
+• Feature-to-benefit translation
+• ROI calculations where applicable
+• Before/after comparisons
+• Video testimonials
+
+**4. Friction Reduction**
+• One-click signup options
+• Mobile-optimized experience
+• Fast page load times
+• Clear pricing (no hidden fees)
+
+Ready to boost your conversion rates?`,
+
+  automation: `**Marketing Automation Strategy:**
+
+Using n8n and GoHighLevel, I can set up:
+
+**1. Lead Nurturing Sequences**
+• Welcome email series
+• Educational content drip campaigns
+• Re-engagement workflows
+• Abandoned cart recovery
+
+**2. Sales Pipeline Automation**
+• Automatic lead assignment
+• Follow-up reminders
+• Deal stage progression
+• Win/loss tracking
+
+**3. Customer Journey Automation**
+• Onboarding sequences
+• Milestone celebrations
+• Review/referral requests
+• Upsell/cross-sell campaigns
+
+**4. Reporting & Analytics**
+• Automated daily/weekly reports
+• Lead source tracking
+• Conversion rate monitoring
+• ROI dashboards
+
+Would you like me to design a custom automation workflow?`,
+};
+
 const initialMessage: Message = {
   id: '1',
   role: 'assistant',
-  content: "👋 Hi! I'm Usman's virtual assistant. I can help you learn about his services, schedule a meeting, or answer any questions. What would you like to know?\n\n**Services I can explain:**\n• WordPress Development\n• GoHighLevel (GHL)\n• ClickFunnels\n• n8n Automation\n• Figma & Canva Design\n\nOr type 'schedule' to book a meeting!",
+  content: "👋 Hi! I'm Usman's virtual sales assistant. I can help you:\n\n• **Learn about services** - WordPress, Funnels, Automation\n• **Discuss marketing strategies** - Lead capture, conversions\n• **Schedule a meeting** - Book a free consultation\n• **Get pricing info** - Custom quotes available\n\nWhat brings you here today?",
 };
 
 export default function ChatBot() {
@@ -59,51 +155,83 @@ export default function ChatBot() {
   const generateResponse = (userMessage: string): string => {
     const msg = userMessage.toLowerCase();
     
-    if (msg.includes('schedule') || msg.includes('meeting') || msg.includes('book') || msg.includes('call')) {
-      return "Great! I'd love to schedule a meeting with you. Please provide your:\n\n1. **Name**\n2. **Email**\n3. **Preferred date/time**\n4. **Project brief**\n\nOr you can email directly at: **usman755781@gmail.com**\n\nI typically respond within 24 hours!";
+    // Meeting/Schedule handling
+    if (msg.includes('schedule') || msg.includes('meeting') || msg.includes('book') || msg.includes('call') || msg.includes('consultation')) {
+      return "Great! Let's schedule a meeting. Please provide:\n\n1. **Your Name**\n2. **Email**\n3. **Preferred date/time** (PKT timezone)\n4. **Brief project description**\n\n📧 Or email directly: **usman755781@gmail.com**\n📱 WhatsApp: **+92 308 286 0795**\n\nI typically respond within 2-4 hours during business hours!";
     }
     
-    if (msg.includes('wordpress') || msg.includes('website')) {
-      return `**${expertise.wordpress.title}**\n\n${expertise.wordpress.description}\n\n💰 Pricing starts from $500 for a basic website.\n\nWould you like to schedule a consultation?`;
+    // Lead capture / Landing page marketing
+    if (msg.includes('lead') || msg.includes('capture') || msg.includes('landing page') || msg.includes('marketing tactic') || msg.includes('marketing strategy')) {
+      return marketingStrategies.leadCapture;
     }
     
-    if (msg.includes('ghl') || msg.includes('gohighlevel') || msg.includes('high level')) {
-      return `**${expertise.ghl.title}**\n\n${expertise.ghl.description}\n\n💰 GHL setup and automation starts from $300.\n\nWant to discuss your project?`;
+    // Conversion optimization
+    if (msg.includes('conversion') || msg.includes('convert') || msg.includes('optimize') || msg.includes('improve')) {
+      return marketingStrategies.conversion;
     }
     
-    if (msg.includes('clickfunnel') || msg.includes('funnel')) {
-      return `**${expertise.clickfunnels.title}**\n\n${expertise.clickfunnels.description}\n\n💰 Funnel building starts from $400.\n\nReady to boost your conversions?`;
+    // Automation strategy
+    if (msg.includes('automate') || msg.includes('automation') || msg.includes('workflow') || msg.includes('n8n')) {
+      return marketingStrategies.automation;
     }
     
-    if (msg.includes('n8n') || msg.includes('automation') || msg.includes('automate')) {
-      return `**${expertise.n8n.title}**\n\n${expertise.n8n.description}\n\n💰 Automation workflows start from $200.\n\nLet's streamline your business!`;
+    // WordPress
+    if (msg.includes('wordpress') || msg.includes('website') || msg.includes('wp')) {
+      return `**${expertise.wordpress.title}**\n\n${expertise.wordpress.description}\n\n**What I can build:**\n• Business websites\n• E-commerce stores (WooCommerce)\n• Membership sites\n• Blog platforms\n• Portfolio websites\n\n💰 Starting from $500\n⏱️ Turnaround: 1-3 weeks\n\nWould you like to schedule a free consultation?`;
     }
     
-    if (msg.includes('figma') || msg.includes('design') || msg.includes('ui')) {
-      return `**${expertise.figma.title}**\n\n${expertise.figma.description}\n\n💰 UI/UX design starts from $250.\n\nShall I show you some examples?`;
+    // GHL
+    if (msg.includes('ghl') || msg.includes('gohighlevel') || msg.includes('high level') || msg.includes('crm')) {
+      return `**${expertise.ghl.title}**\n\n${expertise.ghl.description}\n\n**GHL Services:**\n• Full CRM setup & configuration\n• Sales pipeline creation\n• Email/SMS automation\n• Appointment booking\n• Reputation management\n\n💰 Starting from $300\n⏱️ Setup time: 3-7 days\n\nWant me to show you some case studies?`;
     }
     
-    if (msg.includes('canva') || msg.includes('graphic')) {
-      return `**${expertise.canva.title}**\n\n${expertise.canva.description}\n\n💰 Graphic design packages start from $100.\n\nNeed branded materials?`;
+    // Funnels
+    if (msg.includes('clickfunnel') || msg.includes('funnel') || msg.includes('sales page')) {
+      return `**${expertise.clickfunnels.title}**\n\n${expertise.clickfunnels.description}\n\n**Funnel Types I Build:**\n• Lead generation funnels\n• Webinar registration funnels\n• Product launch funnels\n• Tripwire funnels\n• High-ticket application funnels\n\n💰 Starting from $400\n⏱️ Delivery: 5-10 days\n\nReady to boost your conversions?`;
     }
     
-    if (msg.includes('price') || msg.includes('cost') || msg.includes('rate') || msg.includes('pricing')) {
-      return "**Pricing Overview:**\n\n• WordPress Website: from $500\n• GoHighLevel Setup: from $300\n• ClickFunnels: from $400\n• n8n Automation: from $200\n• Figma Design: from $250\n• Canva Graphics: from $100\n\nAll projects include 1 month of free support. Custom quotes available for larger projects.\n\nWant a detailed quote for your project?";
+    // Design
+    if (msg.includes('figma') || msg.includes('design') || msg.includes('ui') || msg.includes('ux')) {
+      return `**${expertise.figma.title}**\n\n${expertise.figma.description}\n\n**Design Services:**\n• Landing page designs\n• Funnel wireframes\n• UI/UX mockups\n• Brand style guides\n• Mobile-responsive designs\n\n💰 Starting from $250\n⏱️ Delivery: 2-5 days\n\nShall I show you my design portfolio?`;
     }
     
-    if (msg.includes('contact') || msg.includes('email') || msg.includes('phone')) {
-      return "**Contact Information:**\n\n📧 Email: usman755781@gmail.com\n📱 Phone: +92 3259 438 262\n📍 Location: Lahore, Pakistan\n\nI'm available Monday-Saturday, 9 AM - 8 PM PKT.\n\nWould you like to schedule a call?";
+    // Canva
+    if (msg.includes('canva') || msg.includes('graphic') || msg.includes('social media')) {
+      return `**${expertise.canva.title}**\n\n${expertise.canva.description}\n\n**What I Create:**\n• Social media posts & stories\n• Ad creatives\n• Presentation decks\n• Lead magnets (ebooks, checklists)\n• Marketing materials\n\n💰 Starting from $100\n⏱️ Quick turnaround: 1-3 days\n\nNeed branded graphics?`;
     }
     
-    if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey')) {
-      return "Hello! 👋 Welcome! How can I help you today?\n\nI can tell you about:\n• Our services and expertise\n• Pricing information\n• Schedule a meeting\n• Answer project questions\n\nWhat interests you?";
+    // Pricing
+    if (msg.includes('price') || msg.includes('cost') || msg.includes('rate') || msg.includes('pricing') || msg.includes('how much')) {
+      return "**Pricing Overview:**\n\n| Service | Starting Price |\n|---------|---------------|\n| WordPress Website | $500 |\n| GoHighLevel Setup | $300 |\n| ClickFunnels Funnel | $400 |\n| n8n Automation | $200 |\n| Figma Design | $250 |\n| Canva Graphics | $100 |\n\n✅ All projects include 1 month free support\n✅ Revisions included\n✅ 100% satisfaction guarantee\n\nWant a custom quote for your specific project?";
     }
     
+    // Contact
+    if (msg.includes('contact') || msg.includes('email') || msg.includes('phone') || msg.includes('reach')) {
+      return "**Contact Information:**\n\n📧 **Email:** usman755781@gmail.com\n📱 **Phone/WhatsApp:** +92 308 286 0795\n📍 **Location:** Lahore, Pakistan\n\n**Working Hours:**\nMonday - Saturday\n9:00 AM - 8:00 PM (PKT)\n\n**Response Time:**\n• Email: Within 4-6 hours\n• WhatsApp: Within 1-2 hours\n\nPrefer to schedule a video call?";
+    }
+    
+    // Greetings
+    if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey') || msg.includes('good')) {
+      return "Hello! 👋 Great to meet you!\n\nI'm here to help you with:\n\n🌐 **Web Development** - WordPress sites\n📈 **Sales Funnels** - GHL, ClickFunnels\n⚙️ **Automation** - n8n workflows\n🎨 **Design** - Figma, Canva\n\nWhat challenge are you trying to solve today?";
+    }
+    
+    // Portfolio/Work
+    if (msg.includes('portfolio') || msg.includes('work') || msg.includes('example') || msg.includes('case study')) {
+      return "**My Portfolio Highlights:**\n\n🏆 **50+ WordPress Sites** delivered\n📊 **30+ Sales Funnels** built\n🔄 **100+ Automations** deployed\n\n**Recent Projects:**\n• E-commerce site with 40% conversion increase\n• Lead funnel generating 200+ leads/month\n• Automation saving client 20 hrs/week\n\nWant to see specific examples or discuss a similar project?";
+    }
+    
+    // Thanks
     if (msg.includes('thank')) {
-      return "You're welcome! 😊 Is there anything else you'd like to know? Feel free to ask about our services or schedule a meeting anytime!";
+      return "You're welcome! 😊\n\nIs there anything else you'd like to know?\n\n• More about services?\n• Pricing details?\n• Schedule a call?\n\nI'm here to help!";
     }
     
-    return "Thanks for your message! I can help you with:\n\n• **WordPress** - Website development\n• **GHL/ClickFunnels** - Funnel building\n• **n8n** - Workflow automation\n• **Figma/Canva** - Design services\n\nOr type 'schedule' to book a meeting, or 'pricing' for rates.\n\nWhat would you like to explore?";
+    // How to achieve goal / strategy questions
+    if (msg.includes('how') && (msg.includes('achieve') || msg.includes('goal') || msg.includes('grow') || msg.includes('increase') || msg.includes('get more'))) {
+      return "**Strategic Approach:**\n\nTo achieve your goals, I typically recommend:\n\n**1. Assessment Phase**\n• Analyze current situation\n• Identify bottlenecks\n• Define clear KPIs\n\n**2. Strategy Development**\n• Custom solution design\n• Technology selection\n• Timeline planning\n\n**3. Implementation**\n• Build & deploy solution\n• Testing & optimization\n• Training & handover\n\n**4. Growth & Scale**\n• Monitor performance\n• Continuous improvement\n• Scale what works\n\nCan you tell me more about your specific goal? I'll provide a tailored strategy!";
+    }
+    
+    // Default response
+    return "Thanks for your message! I can help you with:\n\n🌐 **WordPress** - Custom websites\n📈 **Funnels** - Lead capture & sales\n⚙️ **Automation** - n8n workflows\n🎨 **Design** - UI/UX & graphics\n\n**Quick Actions:**\n• Type 'pricing' for rates\n• Type 'schedule' to book a call\n• Type 'lead capture' for marketing strategies\n\nWhat would you like to explore?";
   };
 
   const handleSend = async () => {
@@ -119,8 +247,7 @@ export default function ChatBot() {
     setInput('');
     setIsTyping(true);
     
-    // Simulate typing delay
-    await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
+    await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 800));
     
     const response = generateResponse(input);
     const assistantMessage: Message = {
@@ -169,10 +296,10 @@ export default function ChatBot() {
                   <span className="text-accent-foreground font-bold text-sm">UA</span>
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold text-foreground">Usman's Assistant</h3>
+                  <h3 className="text-sm font-semibold text-foreground">Usman's Sales Assistant</h3>
                   <p className="text-xs text-foreground-muted flex items-center gap-1">
                     <span className="w-2 h-2 bg-green-500 rounded-full" />
-                    Online now
+                    Online - Ready to help
                   </p>
                 </div>
               </div>
@@ -194,7 +321,7 @@ export default function ChatBot() {
                   className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[80%] p-3 rounded-lg text-sm ${
+                    className={`max-w-[85%] p-3 rounded-lg text-sm ${
                       message.role === 'user'
                         ? 'bg-accent text-accent-foreground'
                         : 'bg-background-muted text-foreground'
@@ -227,7 +354,7 @@ export default function ChatBot() {
 
             {/* Quick Actions */}
             <div className="px-4 py-2 flex gap-2 overflow-x-auto border-t border-border bg-background-muted">
-              {['Schedule Meeting', 'Pricing', 'Services'].map((action) => (
+              {['Schedule Meeting', 'Pricing', 'Lead Capture', 'Services'].map((action) => (
                 <button
                   key={action}
                   onClick={() => setInput(action.toLowerCase())}
@@ -246,7 +373,7 @@ export default function ChatBot() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder="Ask about services, pricing, or schedule..."
+                  placeholder="Ask about services, marketing strategies..."
                   className="flex-1 px-4 py-2 bg-background-elevated border border-border rounded-lg text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-accent"
                 />
                 <button

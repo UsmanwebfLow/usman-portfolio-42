@@ -2,42 +2,42 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import GradientFillHeading from './GradientFillHeading';
 import { Send, Mail, MapPin, Phone } from 'lucide-react';
+import { Instagram, Linkedin, Github } from 'lucide-react';
+
+const socialLinks = [
+  { icon: Instagram, href: 'https://www.instagram.com/usmanmughal14200691/', label: 'Instagram' },
+  { icon: () => <span className="text-lg font-bold">𝕏</span>, href: 'https://x.com/usmanal08972977', label: 'X (Twitter)' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/feed/', label: 'LinkedIn' },
+  { icon: Github, href: 'https://github.com/usmanwebexpert/portfolio', label: 'GitHub' },
+];
+
+const services = [
+  'WordPress Development',
+  'Funnel Building (GHL/ClickFunnels)',
+  'n8n Automation',
+  'Figma Design',
+  'Canva Graphics',
+  'Landing Page Design',
+];
 
 export default function ContactSection() {
-  const [isFlipped, setIsFlipped] = useState(false);
   const [formData, setFormData] = useState({
-    cardNumber: '',
-    cardHolder: '',
-    expiry: '',
-    cvv: '',
+    name: '',
+    email: '',
+    phone: '',
+    service: '',
+    message: '',
   });
 
-  const formatCardNumber = (value: string) => {
-    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-    const matches = v.match(/\d{4,16}/g);
-    const match = (matches && matches[0]) || '';
-    const parts = [];
-    for (let i = 0, len = match.length; i < len; i += 4) {
-      parts.push(match.substring(i, i + 4));
-    }
-    return parts.length ? parts.join(' ') : value;
-  };
-
-  const formatExpiry = (value: string) => {
-    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-    if (v.length >= 2) {
-      return v.substring(0, 2) + '/' + v.substring(2, 4);
-    }
-    return v;
-  };
-
   const handleInputChange = (field: string, value: string) => {
-    if (field === 'cardNumber') {
-      value = formatCardNumber(value);
-    } else if (field === 'expiry') {
-      value = formatExpiry(value);
-    }
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle form submission
+    console.log('Form submitted:', formData);
+    alert('Thank you for your message! I will get back to you soon.');
   };
 
   return (
@@ -69,14 +69,15 @@ export default function ContactSection() {
             className="space-y-8"
           >
             <p className="text-body-light text-lg text-foreground-muted leading-relaxed">
-              Ready to start your project? Let's collaborate and bring your vision to life.
+              Ready to start your project? Let's collaborate and bring your vision to life. 
+              I'm available for WordPress development, funnel building, and automation projects.
             </p>
             
             <div className="space-y-6">
               {[
-                { icon: Mail, label: 'Email', value: 'hello@example.com' },
-                { icon: Phone, label: 'Phone', value: '+1 (555) 123-4567' },
-                { icon: MapPin, label: 'Location', value: 'San Francisco, CA' },
+                { icon: Mail, label: 'Email', value: 'usman755781@gmail.com', href: 'mailto:usman755781@gmail.com' },
+                { icon: Phone, label: 'Phone', value: '+92 308 286 0795', href: 'tel:+923082860795' },
+                { icon: MapPin, label: 'Location', value: 'Lahore, Pakistan', href: null },
               ].map((item, index) => (
                 <motion.div
                   key={item.label}
@@ -91,136 +92,133 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <div className="text-xs text-foreground-soft tracking-wider uppercase">{item.label}</div>
-                    <div className="text-foreground">{item.value}</div>
+                    {item.href ? (
+                      <a href={item.href} className="text-foreground hover:text-accent transition-colors">
+                        {item.value}
+                      </a>
+                    ) : (
+                      <div className="text-foreground">{item.value}</div>
+                    )}
                   </div>
                 </motion.div>
               ))}
             </div>
+
+            {/* Social Links */}
+            <div className="pt-6">
+              <h4 className="text-xs text-foreground-soft tracking-wider uppercase mb-4">Follow Me</h4>
+              <div className="flex gap-4">
+                {socialLinks.map((social, index) => (
+                  <motion.a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.1, y: -2 }}
+                    className="w-12 h-12 border border-border flex items-center justify-center text-foreground-muted hover:text-foreground hover:border-foreground transition-all"
+                    title={social.label}
+                  >
+                    <social.icon className="w-5 h-5" />
+                  </motion.a>
+                ))}
+              </div>
+            </div>
           </motion.div>
           
-          {/* 3D Credit Card Form */}
+          {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            {/* Credit Card */}
-            <div className="credit-card-wrapper mb-[-50px] relative z-10">
-              <div className={`credit-card w-full h-[200px] relative ${isFlipped ? 'flipped' : ''}`}>
-                {/* Front */}
-                <div className="credit-card-face credit-card-front text-foreground">
-                  <div className="absolute top-4 right-5 flex">
-                    <div className="w-7 h-7 rounded-full bg-white/80" />
-                    <div className="w-7 h-7 rounded-full bg-white/40 -ml-3" />
-                  </div>
-                  
-                  <div className="w-10 h-8 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded mb-4" />
-                  
-                  <div className="text-lg font-mono tracking-widest mb-4">
-                    {formData.cardNumber || '•••• •••• •••• ••••'}
-                  </div>
-                  
-                  <div className="flex justify-between items-end">
-                    <div>
-                      <div className="text-[9px] opacity-60 uppercase tracking-wider mb-1">Card Holder</div>
-                      <div className="text-xs font-medium uppercase tracking-wider">
-                        {formData.cardHolder || 'YOUR NAME'}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-[9px] opacity-60 uppercase tracking-wider mb-1">Expires</div>
-                      <div className="text-xs font-medium">{formData.expiry || 'MM/YY'}</div>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Back */}
-                <div className="credit-card-face credit-card-back text-foreground">
-                  <div className="absolute top-5 left-0 right-0 h-10 bg-black/50" />
-                  
-                  <div className="mt-20 flex items-center gap-4">
-                    <span className="text-[9px] opacity-60 uppercase tracking-wider">CVV</span>
-                    <div className="flex-1 h-8 bg-white rounded flex items-center justify-end pr-3">
-                      <span className="text-sm font-mono text-black/80 italic tracking-widest">
-                        {formData.cvv || '•••'}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Form */}
-            <div className="bg-foreground/95 p-8 pt-16">
-              <h4 className="text-xl font-heading tracking-wider text-background text-center mb-6">
-                PAYMENT DETAILS
+            <div className="bg-background-muted border border-border p-8">
+              <h4 className="text-xl font-heading tracking-wider text-foreground text-center mb-6">
+                SEND A MESSAGE
               </h4>
               
-              <form className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-[10px] font-medium text-background/50 uppercase tracking-wider mb-2">
-                    Card Number
+                  <label className="block text-[10px] font-medium text-foreground-soft uppercase tracking-wider mb-2">
+                    Your Name *
                   </label>
                   <input
                     type="text"
-                    value={formData.cardNumber}
-                    onChange={(e) => handleInputChange('cardNumber', e.target.value)}
-                    placeholder="1234 5678 9012 3456"
-                    maxLength={19}
-                    className="w-full px-4 py-3 bg-background/10 border border-background/20 text-background placeholder:text-background/30 focus:outline-none focus:border-background/50"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-[10px] font-medium text-background/50 uppercase tracking-wider mb-2">
-                    Card Holder Name
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.cardHolder}
-                    onChange={(e) => handleInputChange('cardHolder', e.target.value)}
+                    required
+                    value={formData.name}
+                    onChange={(e) => handleInputChange('name', e.target.value)}
                     placeholder="John Doe"
-                    className="w-full px-4 py-3 bg-background/10 border border-background/20 text-background placeholder:text-background/30 focus:outline-none focus:border-background/50"
+                    className="w-full px-4 py-3 bg-background border border-border text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-foreground transition-colors"
                   />
                 </div>
                 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[10px] font-medium text-background/50 uppercase tracking-wider mb-2">
-                      Expiry Date
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.expiry}
-                      onChange={(e) => handleInputChange('expiry', e.target.value)}
-                      placeholder="MM/YY"
-                      maxLength={5}
-                      className="w-full px-4 py-3 bg-background/10 border border-background/20 text-background placeholder:text-background/30 focus:outline-none focus:border-background/50"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-medium text-background/50 uppercase tracking-wider mb-2">
-                      CVV
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.cvv}
-                      onChange={(e) => handleInputChange('cvv', e.target.value)}
-                      onFocus={() => setIsFlipped(true)}
-                      onBlur={() => setIsFlipped(false)}
-                      placeholder="•••"
-                      maxLength={4}
-                      className="w-full px-4 py-3 bg-background/10 border border-background/20 text-background placeholder:text-background/30 focus:outline-none focus:border-background/50"
-                    />
-                  </div>
+                <div>
+                  <label className="block text-[10px] font-medium text-foreground-soft uppercase tracking-wider mb-2">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    placeholder="john@example.com"
+                    className="w-full px-4 py-3 bg-background border border-border text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-foreground transition-colors"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-[10px] font-medium text-foreground-soft uppercase tracking-wider mb-2">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => handleInputChange('phone', e.target.value)}
+                    placeholder="+1 (555) 123-4567"
+                    className="w-full px-4 py-3 bg-background border border-border text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-foreground transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-medium text-foreground-soft uppercase tracking-wider mb-2">
+                    What Service Do You Need? *
+                  </label>
+                  <select
+                    required
+                    value={formData.service}
+                    onChange={(e) => handleInputChange('service', e.target.value)}
+                    className="w-full px-4 py-3 bg-background border border-border text-foreground focus:outline-none focus:border-foreground transition-colors"
+                  >
+                    <option value="">Select a service...</option>
+                    {services.map((service) => (
+                      <option key={service} value={service}>{service}</option>
+                    ))}
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="block text-[10px] font-medium text-foreground-soft uppercase tracking-wider mb-2">
+                    Your Message *
+                  </label>
+                  <textarea
+                    required
+                    value={formData.message}
+                    onChange={(e) => handleInputChange('message', e.target.value)}
+                    placeholder="Tell me about your project..."
+                    rows={4}
+                    className="w-full px-4 py-3 bg-background border border-border text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-foreground transition-colors resize-none"
+                  />
                 </div>
                 
                 <motion.button
                   type="submit"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full py-4 bg-background text-foreground font-heading tracking-wider flex items-center justify-center gap-3 mt-4 hover:bg-background/90 transition-colors"
+                  className="w-full py-4 bg-foreground text-background font-heading tracking-wider flex items-center justify-center gap-3 mt-4 hover:bg-foreground/90 transition-colors"
                 >
                   <Send className="w-4 h-4" />
                   SEND MESSAGE

@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Download } from 'lucide-react';
+import logo from '@/assets/logo.png';
 
 const navItems = [
   { label: 'HOME', href: '#hero-section' },
   { label: 'WORK', href: '#work' },
   { label: 'ABOUT', href: '#about' },
-  { label: 'BLOG', href: '#testimonials' },
+  { label: 'SERVICES', href: '#services' },
   { label: 'CONTACT', href: '#contact' },
 ];
 
@@ -27,7 +28,7 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, delay: 0.5 }}
-        className="fixed top-0 left-0 right-0 z-50 py-6 px-8"
+        className="fixed top-0 left-0 right-0 z-50 py-4 px-8 bg-background/80 backdrop-blur-sm"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
@@ -37,11 +38,9 @@ export default function Navbar() {
               e.preventDefault();
               scrollToSection('#hero-section');
             }}
-            className="flex items-center gap-2"
+            className="flex items-center"
           >
-            <div className="w-10 h-10 border border-foreground flex items-center justify-center">
-              <span className="text-heading text-sm tracking-widest">JD</span>
-            </div>
+            <img src={logo} alt="UA Logo" className="h-10 w-auto invert" />
           </motion.a>
           
           {/* Desktop Navigation */}
@@ -62,14 +61,17 @@ export default function Navbar() {
             ))}
           </div>
           
-          {/* Contact Button */}
-          <motion.button
+          {/* CV Download Button */}
+          <motion.a
+            href="/resume.pdf"
+            download="Usman_Ali_Resume.pdf"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="hidden md:block px-6 py-3 border border-foreground text-heading text-xs tracking-[0.2em] hover:bg-foreground hover:text-background transition-all"
+            className="hidden md:flex items-center gap-2 px-6 py-3 border border-foreground text-heading text-xs tracking-[0.2em] hover:bg-foreground hover:text-background transition-all"
           >
-            CONTACT
-          </motion.button>
+            <Download className="w-4 h-4" />
+            CV
+          </motion.a>
           
           {/* Mobile menu button */}
           <motion.button
@@ -109,6 +111,17 @@ export default function Navbar() {
                   {item.label}
                 </motion.a>
               ))}
+              <motion.a
+                href="/resume.pdf"
+                download="Usman_Ali_Resume.pdf"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="flex items-center gap-2 px-8 py-4 border border-foreground text-heading text-sm tracking-[0.2em] mt-4"
+              >
+                <Download className="w-4 h-4" />
+                DOWNLOAD CV
+              </motion.a>
             </div>
           </motion.div>
         )}
