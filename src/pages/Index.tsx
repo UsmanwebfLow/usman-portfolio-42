@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Lenis from '@studio-freight/lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -6,11 +6,13 @@ import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
 import ServicesSection from '@/components/ServicesSection';
+import BentoSection from '@/components/BentoSection';
 import WorkSection from '@/components/WorkSection';
 import ToolsSection from '@/components/ToolsSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
+import ChatBot from '@/components/ChatBot';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -51,6 +53,7 @@ export default function Index() {
         <main className="relative z-10 bg-background">
           <AboutSection />
           <ServicesSection />
+          <BentoSection />
           <WorkSection />
           <ToolsSection />
           <TestimonialsSection />
@@ -60,7 +63,7 @@ export default function Index() {
       </div>
 
       {/* Scroll progress */}
-      <div className="fixed bottom-8 right-8 z-50 hidden md:block">
+      <div className="fixed bottom-8 left-8 z-40 hidden md:block">
         <svg width="50" height="50" viewBox="0 0 50 50">
           <circle cx="25" cy="25" r="22" fill="none" stroke="hsl(0 0% 15%)" strokeWidth="1" />
           <circle
@@ -78,6 +81,9 @@ export default function Index() {
           </text>
         </svg>
       </div>
+      
+      {/* ChatBot */}
+      <ChatBot />
     </>
   );
 }

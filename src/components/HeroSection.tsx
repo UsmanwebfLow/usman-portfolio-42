@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import avatarImage from '@/assets/avatar.png';
-import { Facebook, Dribbble, Youtube, Instagram } from 'lucide-react';
+import { Facebook, Linkedin, Instagram, Youtube, Download } from 'lucide-react';
+import logo from '@/assets/logo.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,153 +11,36 @@ export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const nameRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const avatarRef = useRef<HTMLImageElement>(null);
-  const bgMaskRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
     const name = nameRef.current;
     const subtitle = subtitleRef.current;
-    const avatar = avatarRef.current;
-    const bgMask = bgMaskRef.current;
     
-    if (!section || !name || !subtitle || !avatar || !bgMask) return;
+    if (!section || !name || !subtitle) return;
 
-    // Pin the hero section
-    ScrollTrigger.create({
-      trigger: '#scroll-container',
-      pin: '#hero-section',
-      start: 'top top',
-      end: '+=6000',
-      pinSpacing: false,
-    });
-
-    // Animate background mask opening (like scooter)
-    gsap.fromTo(bgMask, 
-      { clipPath: 'inset(45% 0 45% 0)' },
-      {
-        clipPath: 'inset(0% 0 0% 0)',
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '#scroll-container',
-          start: 'top top',
-          end: '+=400',
-          scrub: 1,
-        },
-      }
-    );
-
-    // Animate name text scaling down
+    // Animate name text scaling down on scroll
     gsap.to(name, {
-      scale: 0,
+      scale: 0.8,
       opacity: 0,
       ease: 'power2.out',
       scrollTrigger: {
-        trigger: '#scroll-container',
-        start: '+=200',
-        end: '+=400',
+        trigger: section,
+        start: 'top top',
+        end: '+=300',
         scrub: 1,
       },
     });
 
-    // Animate subtitle
     gsap.to(subtitle, {
-      scale: 0,
       opacity: 0,
+      y: -30,
       ease: 'power2.out',
       scrollTrigger: {
-        trigger: '#scroll-container',
-        start: '+=300',
-        end: '+=400',
-        scrub: 1,
-      },
-    });
-
-    // Avatar animation - starts centered, then moves through sections
-    // Initial: lift up and scale down
-    gsap.fromTo(avatar,
-      { scale: 1, y: 0, x: 0, opacity: 1 },
-      {
-        scale: 0.8,
-        y: -150,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '#scroll-container',
-          start: '+=500',
-          end: '+=700',
-          scrub: 1,
-        },
-      }
-    );
-
-    // Move avatar to the right for About section
-    gsap.to(avatar, {
-      x: '30vw',
-      y: -100,
-      scale: 0.7,
-      ease: 'power2.inOut',
-      scrollTrigger: {
-        trigger: '#scroll-container',
-        start: '+=1000',
-        end: '+=800',
-        scrub: 1,
-      },
-    });
-
-    // Move avatar to the left for Services
-    gsap.to(avatar, {
-      x: '-25vw',
-      y: 50,
-      scale: 0.65,
-      ease: 'power2.inOut',
-      scrollTrigger: {
-        trigger: '#scroll-container',
-        start: '+=2000',
-        end: '+=800',
-        scrub: 1,
-      },
-    });
-
-    // Avatar fades for Work section
-    gsap.to(avatar, {
-      opacity: 0.3,
-      x: '10vw',
-      y: 100,
-      scale: 0.5,
-      ease: 'power2.inOut',
-      scrollTrigger: {
-        trigger: '#scroll-container',
-        start: '+=3000',
-        end: '+=800',
-        scrub: 1,
-      },
-    });
-
-    // Avatar comes back for final sections
-    gsap.to(avatar, {
-      opacity: 1,
-      x: 0,
-      y: -50,
-      scale: 0.6,
-      ease: 'power2.inOut',
-      scrollTrigger: {
-        trigger: '#scroll-container',
-        start: '+=4500',
-        end: '+=800',
-        scrub: 1,
-      },
-    });
-
-    // Final fade out
-    gsap.to(avatar, {
-      opacity: 0,
-      y: -200,
-      scale: 0.4,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '#scroll-container',
-        start: '+=5500',
-        end: '+=500',
+        trigger: section,
+        start: '+=100',
+        end: '+=200',
         scrub: 1,
       },
     });
@@ -173,34 +56,48 @@ export default function HeroSection() {
       id="hero-section"
       className="relative h-screen w-full overflow-hidden section-dark"
     >
-      {/* Background mask (like scooter demo) */}
-      <div 
-        ref={bgMaskRef}
-        className="masked-bg"
-      />
-      
-      {/* Avatar image - pinned and animated */}
-      <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-        <img
-          ref={avatarRef}
-          src={avatarImage}
-          alt="Portrait"
-          className="h-[85vh] w-auto object-contain grayscale"
-        />
+      {/* Video Background */}
+      <div className="absolute inset-0 z-0">
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover opacity-60"
+        >
+          <source src="/hero-video.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/50 to-background" />
       </div>
+      
+      {/* Logo - Top Left */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="absolute top-6 left-6 z-50"
+      >
+        <img src={logo} alt="UA Logo" className="h-12 w-auto invert" />
+      </motion.div>
       
       {/* Social links - left side */}
       <div className="social-links-vertical hidden md:flex">
-        {[Facebook, Dribbble, Instagram, Youtube].map((Icon, index) => (
+        {[
+          { icon: Facebook, href: '#' },
+          { icon: Linkedin, href: '#' },
+          { icon: Instagram, href: '#' },
+          { icon: Youtube, href: '#' },
+        ].map((social, index) => (
           <motion.a
             key={index}
-            href="#"
+            href={social.href}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1 + index * 0.1 }}
             className="text-foreground-muted hover:text-foreground transition-colors"
           >
-            <Icon className="w-4 h-4" />
+            <social.icon className="w-4 h-4" />
           </motion.a>
         ))}
       </div>
@@ -212,10 +109,10 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3 }}
-          className="text-display text-[15vw] md:text-[12vw] lg:text-[10vw] text-foreground leading-none"
+          className="text-display text-[18vw] md:text-[14vw] lg:text-[12vw] text-foreground leading-none"
         >
-          <span className="block">JESPER</span>
-          <span className="block">DIETRICH</span>
+          <span className="block">USMAN</span>
+          <span className="block">ALI</span>
         </motion.h1>
         
         <motion.p
@@ -225,10 +122,23 @@ export default function HeroSection() {
           transition={{ duration: 1, delay: 0.6 }}
           className="text-heading text-sm md:text-base tracking-[0.3em] text-foreground-muted mt-8"
         >
-          OVER 15 YEARS OF EXPERIENCE
+          WORDPRESS DEVELOPER | FUNNEL BUILDER
           <br />
-          <span className="text-foreground-soft">IN THE DESIGN INDUSTRY</span>
+          <span className="text-accent-warm">AUTOMATION SPECIALIST</span>
         </motion.p>
+        
+        {/* Resume Download Button */}
+        <motion.a
+          href="/resume.pdf"
+          download="Usman_Ali_Resume.pdf"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.9 }}
+          className="mt-10 inline-flex items-center gap-3 px-8 py-4 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-all duration-300 text-heading text-sm tracking-[0.2em]"
+        >
+          <Download className="w-4 h-4" />
+          DOWNLOAD CV
+        </motion.a>
       </div>
       
       {/* Scroll indicator - circular text */}

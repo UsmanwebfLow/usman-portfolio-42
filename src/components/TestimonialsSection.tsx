@@ -3,34 +3,40 @@ import { motion } from 'framer-motion';
 import GradientFillHeading from './GradientFillHeading';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Quote } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const testimonials = [
   {
     number: '01',
-    text: "One of the best template I've ever had. I love it! It's fully customizable, well coded, fast and responsive.",
-    author: '— Wironimo',
+    text: "Usman delivered an outstanding WordPress website for my business. Fast, responsive, and exactly what I envisioned. His attention to detail is remarkable!",
+    author: 'Ahmed Khan',
+    role: 'Business Owner',
   },
   {
     number: '02',
-    text: "Brilliant template. Tons of options, many concepts, design flexibility, code quality.",
-    author: '— Gneto',
+    text: "The GoHighLevel funnel he built increased our conversion rate by 40%. His expertise in automation saved us countless hours of manual work.",
+    author: 'Sarah Mitchell',
+    role: 'Marketing Director',
   },
   {
     number: '03',
-    text: "Easy to customize, plenty of choices to display your portfolio, fast loading times. Excellent support.",
-    author: '— Brendck',
+    text: "Professional, creative, and always delivers on time. Usman's n8n automations streamlined our entire lead management process.",
+    author: 'Michael Chen',
+    role: 'Startup Founder',
   },
   {
     number: '04',
-    text: "Very nice design and well organised and commented code. Also good customer service.",
-    author: '— Gazzzz',
+    text: "His Figma designs are clean and modern. The website he created perfectly represents our brand identity. Highly recommended!",
+    author: 'Lisa Anderson',
+    role: 'E-commerce Manager',
   },
   {
     number: '05',
-    text: "I found a bug on iPhone and iPad and the author fixed it very quickly.",
-    author: '— Admante',
+    text: "Working with Usman was a great experience. He understood our needs quickly and delivered a solution that exceeded expectations.",
+    author: 'David Park',
+    role: 'Agency Owner',
   },
 ];
 
@@ -74,9 +80,9 @@ export default function TestimonialsSection() {
   return (
     <section 
       id="testimonials"
-      className="relative py-32 px-6 section-muted"
+      className="relative py-32 px-6 section-darker"
     >
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-3xl mx-auto">
         <div className="text-center mb-16">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
@@ -105,17 +111,31 @@ export default function TestimonialsSection() {
                 viewport={{ once: true }}
                 className="testimonial-card relative"
               >
-                <span className="absolute top-6 left-6 text-base font-heading tracking-wider text-foreground-muted/50">
+                <Quote className="absolute top-6 right-6 w-8 h-8 text-background/20" />
+                
+                <span className="absolute top-6 left-6 text-base font-heading tracking-wider text-background/30">
                   {testimonial.number}
                 </span>
                 
-                <p className="text-base md:text-lg leading-relaxed italic text-foreground-soft mt-10 mb-4">
+                <p className="text-base md:text-lg leading-relaxed italic text-background/80 mt-12 mb-6">
                   "{testimonial.text}"
                 </p>
                 
-                <span className="text-xs tracking-wider text-foreground-muted">
-                  {testimonial.author}
-                </span>
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-background/10 flex items-center justify-center">
+                    <span className="text-background/60 text-sm font-bold">
+                      {testimonial.author.split(' ').map(n => n[0]).join('')}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="block text-sm font-medium text-background">
+                      {testimonial.author}
+                    </span>
+                    <span className="text-xs text-background/60">
+                      {testimonial.role}
+                    </span>
+                  </div>
+                </div>
               </motion.div>
             </div>
           ))}

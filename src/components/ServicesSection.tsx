@@ -1,32 +1,38 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import GradientFillHeading from './GradientFillHeading';
+import { ArrowRight } from 'lucide-react';
 
 const services = [
   {
     number: '01',
     title: 'WORDPRESS\nDEVELOPMENT',
     description: 'I build clean, modern and responsive WordPress websites and landing pages. Every site is fully functional, easy to manage, and tailored to reflect your brand identity.',
+    price: 'From $500',
   },
   {
     number: '02',
     title: 'FUNNEL\nBUILDING',
-    description: 'I create high-converting funnels using GoHighLevel, ClickFunnels, and Teachable. From lead capture to sales, every step is optimized to maximize conversions.',
+    description: 'I create high-converting funnels using GoHighLevel and ClickFunnels. From lead capture to sales, every step is optimized to maximize conversions.',
+    price: 'From $400',
   },
   {
     number: '03',
     title: 'N8N\nAUTOMATION',
     description: 'I design automation workflows with n8n to connect apps, automate repetitive tasks, and streamline your business processes, saving time and reducing errors.',
+    price: 'From $200',
   },
   {
     number: '04',
     title: 'FIGMA\nDESIGN',
     description: 'I create visually appealing UI and funnel designs in Figma. My layouts are intuitive, user-friendly, and ready for implementation.',
+    price: 'From $250',
   },
   {
     number: '05',
     title: 'CANVA\nDESIGN',
     description: 'I design professional graphics in Canva, including social posts, marketing materials, and assets for funnels and websites.',
+    price: 'From $100',
   },
 ];
 
@@ -62,7 +68,7 @@ export default function ServicesSection() {
               return (
                 <motion.div
                   key={service.number}
-                  className="service-card-jesper flex-shrink-0 w-[400px] min-h-[450px] relative"
+                  className="service-card-jesper flex-shrink-0 w-[400px] min-h-[480px] relative"
                   style={{ 
                     marginLeft: index === 0 ? 0 : '-180px',
                     zIndex: isActive ? 10 : index,
@@ -88,17 +94,21 @@ export default function ServicesSection() {
                     <h3 className="text-heading text-4xl leading-none mb-6 whitespace-pre-line tracking-wider">
                       {service.title}
                     </h3>
-                    <p className="text-sm leading-relaxed opacity-70 max-w-xs mb-8">
+                    <p className="text-sm leading-relaxed opacity-70 max-w-xs mb-6">
                       {service.description}
                     </p>
-                    <motion.button
-                      className="text-heading text-xs tracking-[0.2em] flex items-center gap-4"
+                    <p className="text-heading text-lg tracking-wider opacity-80 mb-8">
+                      {service.price}
+                    </p>
+                    <motion.a
+                      href="#contact"
+                      className="inline-flex items-center gap-3 text-heading text-xs tracking-[0.2em]"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: isActive ? 1 : 0 }}
                     >
-                      READ MORE
-                      <span className="w-8 h-px bg-current" />
-                    </motion.button>
+                      GET STARTED
+                      <ArrowRight className="w-4 h-4" />
+                    </motion.a>
                   </div>
                 </motion.div>
               );
@@ -130,6 +140,9 @@ export default function ServicesSection() {
               </h3>
               <p className="text-sm leading-relaxed opacity-70 mb-4">
                 {service.description}
+              </p>
+              <p className="text-heading tracking-wider opacity-80">
+                {service.price}
               </p>
             </motion.div>
           ))}
