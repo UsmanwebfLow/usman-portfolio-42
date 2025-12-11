@@ -2,45 +2,29 @@ import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Facebook, Linkedin, Instagram, Youtube, Download } from 'lucide-react';
+import { Download } from 'lucide-react';
 import logo from '@/assets/logo.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const nameRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
-    const name = nameRef.current;
-    const subtitle = subtitleRef.current;
+    const content = contentRef.current;
     
-    if (!section || !name || !subtitle) return;
+    if (!section || !content) return;
 
-    // Animate name text scaling down on scroll
-    gsap.to(name, {
-      scale: 0.8,
+    gsap.to(content, {
       opacity: 0,
+      y: -50,
       ease: 'power2.out',
       scrollTrigger: {
         trigger: section,
         start: 'top top',
-        end: '+=300',
-        scrub: 1,
-      },
-    });
-
-    gsap.to(subtitle, {
-      opacity: 0,
-      y: -30,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: section,
-        start: '+=100',
-        end: '+=200',
+        end: '+=400',
         scrub: 1,
       },
     });
@@ -56,19 +40,19 @@ export default function HeroSection() {
       id="hero-section"
       className="relative h-screen w-full overflow-hidden section-dark"
     >
-      {/* Video Background */}
+      {/* Video Background - Fixed */}
       <div className="absolute inset-0 z-0">
         <video
-          ref={videoRef}
           autoPlay
           muted
           loop
           playsInline
-          className="w-full h-full object-cover opacity-60"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%' }}
         >
           <source src="/hero-video.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/50 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/50 to-background" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%' }} />
       </div>
       
       {/* Logo - Top Left */}
@@ -81,44 +65,24 @@ export default function HeroSection() {
         <img src={logo} alt="UA Logo" className="h-12 w-auto invert" />
       </motion.div>
       
-      {/* Social links - left side */}
-      <div className="social-links-vertical hidden md:flex">
-        {[
-          { icon: Facebook, href: '#' },
-          { icon: Linkedin, href: '#' },
-          { icon: Instagram, href: '#' },
-          { icon: Youtube, href: '#' },
-        ].map((social, index) => (
-          <motion.a
-            key={index}
-            href={social.href}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1 + index * 0.1 }}
-            className="text-foreground-muted hover:text-foreground transition-colors"
-          >
-            <social.icon className="w-4 h-4" />
-          </motion.a>
-        ))}
-      </div>
-      
-      {/* Main content */}
-      <div className="relative z-30 h-full flex flex-col items-center justify-center text-center px-6">
+      {/* Main content - Right aligned */}
+      <div 
+        ref={contentRef}
+        className="relative z-30 h-full flex flex-col items-end justify-center text-right px-6 md:px-16 lg:px-24"
+      >
         <motion.h1
-          ref={nameRef}
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.3 }}
-          className="text-display text-[18vw] md:text-[14vw] lg:text-[12vw] text-foreground leading-none"
+          className="text-display text-[16vw] md:text-[12vw] lg:text-[10vw] text-foreground leading-[0.9]"
         >
           <span className="block">USMAN</span>
           <span className="block">ALI</span>
         </motion.h1>
         
         <motion.p
-          ref={subtitleRef}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.6 }}
           className="text-heading text-sm md:text-base tracking-[0.3em] text-foreground-muted mt-8"
         >
@@ -131,8 +95,8 @@ export default function HeroSection() {
         <motion.a
           href="/resume.pdf"
           download="Usman_Ali_Resume.pdf"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.9 }}
           className="mt-10 inline-flex items-center gap-3 px-8 py-4 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-all duration-300 text-heading text-sm tracking-[0.2em]"
         >
@@ -146,7 +110,7 @@ export default function HeroSection() {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 1.2 }}
-        className="absolute bottom-10 right-10 z-40"
+        className="absolute bottom-10 left-10 z-40"
       >
         <div className="relative w-24 h-24">
           <svg 

@@ -6,21 +6,27 @@ import GradientFillHeading from './GradientFillHeading';
 import { 
   Code, 
   Zap, 
-  Palette, 
   Share2, 
-  Calendar,
   Rocket,
-  Globe,
-  Layers
+  FileText,
+  Bell,
+  Calendar
 } from 'lucide-react';
 
-const projects = [
-  { name: "E-commerce Site", tech: "WordPress + WooCommerce" },
-  { name: "Sales Funnel", tech: "ClickFunnels" },
-  { name: "CRM Automation", tech: "GoHighLevel" },
-  { name: "Lead Workflow", tech: "n8n Automation" },
-  { name: "Landing Page", tech: "Figma + WordPress" },
-  { name: "Brand Kit", tech: "Canva Design" },
+const files = [
+  { name: "wordpress.pdf", body: "Custom WordPress themes and plugins development for modern businesses." },
+  { name: "funnel-guide.pdf", body: "High-converting sales funnel strategies and implementation." },
+  { name: "automation.xlsx", body: "n8n workflow templates for business process automation." },
+  { name: "design-kit.fig", body: "UI/UX design systems and component libraries in Figma." },
+  { name: "brand-assets.zip", body: "Complete brand identity packages including logos and guidelines." },
+];
+
+const notifications = [
+  { title: "New Lead Captured", desc: "From landing page", time: "2m ago" },
+  { title: "Funnel Conversion", desc: "+$499 sale", time: "5m ago" },
+  { title: "Automation Complete", desc: "Email sequence sent", time: "10m ago" },
+  { title: "Site Traffic Spike", desc: "+250 visitors", time: "15m ago" },
+  { title: "New Client Inquiry", desc: "WordPress project", time: "25m ago" },
 ];
 
 const integrations = [
@@ -32,14 +38,6 @@ const integrations = [
   { name: "Canva", icon: "CV" },
 ];
 
-const notifications = [
-  { title: "New Lead Captured", desc: "From landing page", time: "2m ago" },
-  { title: "Funnel Conversion", desc: "+$499 sale", time: "5m ago" },
-  { title: "Automation Complete", desc: "Email sequence sent", time: "10m ago" },
-  { title: "Site Traffic Spike", desc: "+250 visitors", time: "15m ago" },
-  { title: "New Client Inquiry", desc: "WordPress project", time: "25m ago" },
-];
-
 const AnimatedList = ({ className }: { className?: string }) => (
   <div className={cn("flex flex-col gap-2 p-4", className)}>
     {notifications.map((item, idx) => (
@@ -48,10 +46,10 @@ const AnimatedList = ({ className }: { className?: string }) => (
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: idx * 0.2 }}
-        className="flex items-start gap-3 p-3 rounded-lg bg-background-muted/50 border border-border"
+        className="flex items-start gap-3 p-3 rounded-lg bg-foreground/5 border border-border"
       >
         <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center flex-shrink-0">
-          <Zap className="w-4 h-4 text-accent-foreground" />
+          <Bell className="w-4 h-4 text-accent-foreground" />
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-sm font-medium text-foreground truncate">{item.title}</p>
@@ -72,7 +70,7 @@ const IntegrationBeam = ({ className }: { className?: string }) => (
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: idx * 0.1 }}
-          className="w-14 h-14 rounded-lg bg-background-muted border border-border flex items-center justify-center text-xs font-bold text-foreground-muted hover:border-accent hover:text-accent transition-colors"
+          className="w-14 h-14 rounded-lg bg-foreground/5 border border-border flex items-center justify-center text-xs font-bold text-foreground-muted hover:border-accent hover:text-accent transition-colors"
         >
           {int.icon}
         </motion.div>
@@ -83,9 +81,9 @@ const IntegrationBeam = ({ className }: { className?: string }) => (
 
 const features = [
   {
-    Icon: Code,
-    name: "WordPress Mastery",
-    description: "Custom themes, plugins, and WooCommerce solutions for every business need.",
+    Icon: FileText,
+    name: "Project Deliverables",
+    description: "Complete documentation and assets delivered with every project.",
     href: "#services",
     cta: "View Services",
     className: "col-span-3 lg:col-span-1",
@@ -94,26 +92,28 @@ const features = [
         pauseOnHover
         className="absolute top-10 [mask-image:linear-gradient(to_top,transparent_40%,#000_100%)] [--duration:20s]"
       >
-        {projects.map((p, idx) => (
+        {files.map((f, idx) => (
           <figure
             key={idx}
             className={cn(
-              "relative w-36 cursor-pointer overflow-hidden rounded-lg border p-4 mx-2",
-              "border-border bg-background-muted/50 hover:bg-background-muted",
+              "relative w-32 cursor-pointer overflow-hidden rounded-xl border p-4 mx-2",
+              "border-border bg-foreground/5 hover:bg-foreground/10",
               "transform-gpu blur-[1px] transition-all duration-300 ease-out hover:blur-none"
             )}
           >
             <div className="flex flex-col">
-              <span className="text-sm font-medium text-foreground">{p.name}</span>
-              <span className="text-xs text-foreground-muted mt-1">{p.tech}</span>
+              <figcaption className="text-sm font-medium text-foreground">
+                {f.name}
+              </figcaption>
             </div>
+            <blockquote className="mt-2 text-xs text-foreground-muted">{f.body}</blockquote>
           </figure>
         ))}
       </Marquee>
     ),
   },
   {
-    Icon: Zap,
+    Icon: Bell,
     name: "Real-time Results",
     description: "Get notified when leads convert and track your success in real-time.",
     href: "#work",
@@ -135,7 +135,7 @@ const features = [
     ),
   },
   {
-    Icon: Rocket,
+    Icon: Calendar,
     name: "Fast Delivery",
     description: "Quick turnaround times without compromising on quality.",
     className: "col-span-3 lg:col-span-1",
