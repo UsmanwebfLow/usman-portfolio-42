@@ -46,16 +46,16 @@ const AnimatedList = ({ className }: { className?: string }) => (
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: idx * 0.2 }}
-        className="flex items-start gap-3 p-3 rounded-lg bg-foreground/5 border border-border"
+        className="flex items-start gap-3 p-3 rounded-lg bg-gray-100 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700"
       >
-        <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center flex-shrink-0">
-          <Bell className="w-4 h-4 text-accent-foreground" />
+        <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
+          <Bell className="w-4 h-4 text-white" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-foreground truncate">{item.title}</p>
-          <p className="text-xs text-foreground-muted">{item.desc}</p>
+          <p className="text-sm font-medium text-gray-900 dark:text-white truncate">{item.title}</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">{item.desc}</p>
         </div>
-        <span className="text-xs text-foreground-soft">{item.time}</span>
+        <span className="text-xs text-gray-400 dark:text-gray-500">{item.time}</span>
       </motion.div>
     ))}
   </div>
@@ -70,7 +70,7 @@ const IntegrationBeam = ({ className }: { className?: string }) => (
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: idx * 0.1 }}
-          className="w-14 h-14 rounded-lg bg-foreground/5 border border-border flex items-center justify-center text-xs font-bold text-foreground-muted hover:border-accent hover:text-accent transition-colors"
+          className="w-14 h-14 rounded-lg bg-gray-100 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-xs font-bold text-gray-600 dark:text-gray-300 hover:border-blue-500 hover:text-blue-500 transition-colors"
         >
           {int.icon}
         </motion.div>
@@ -82,11 +82,11 @@ const IntegrationBeam = ({ className }: { className?: string }) => (
 const features = [
   {
     Icon: FileText,
-    name: "Project Deliverables",
-    description: "Complete documentation and assets delivered with every project.",
+    name: "Save your files",
+    description: "We automatically save your files as you type.",
     href: "#services",
-    cta: "View Services",
-    className: "col-span-3 lg:col-span-1",
+    cta: "Learn more",
+    className: "col-span-1 md:col-span-3 lg:col-span-1",
     background: (
       <Marquee
         pauseOnHover
@@ -97,16 +97,17 @@ const features = [
             key={idx}
             className={cn(
               "relative w-32 cursor-pointer overflow-hidden rounded-xl border p-4 mx-2",
-              "border-border bg-foreground/5 hover:bg-foreground/10",
+              "border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]",
+              "dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]",
               "transform-gpu blur-[1px] transition-all duration-300 ease-out hover:blur-none"
             )}
           >
             <div className="flex flex-col">
-              <figcaption className="text-sm font-medium text-foreground">
+              <figcaption className="text-sm font-medium text-gray-900 dark:text-white">
                 {f.name}
               </figcaption>
             </div>
-            <blockquote className="mt-2 text-xs text-foreground-muted">{f.body}</blockquote>
+            <blockquote className="mt-2 text-xs text-gray-600 dark:text-gray-400">{f.body}</blockquote>
           </figure>
         ))}
       </Marquee>
@@ -114,41 +115,41 @@ const features = [
   },
   {
     Icon: Bell,
-    name: "Real-time Results",
-    description: "Get notified when leads convert and track your success in real-time.",
+    name: "Notifications",
+    description: "Get notified when something happens.",
     href: "#work",
-    cta: "See Results",
-    className: "col-span-3 lg:col-span-2",
+    cta: "Learn more",
+    className: "col-span-1 md:col-span-3 lg:col-span-2",
     background: (
       <AnimatedList className="absolute top-4 right-0 h-[300px] w-full [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)]" />
     ),
   },
   {
     Icon: Share2,
-    name: "50+ Integrations",
-    description: "Connect your favorite tools and platforms seamlessly.",
+    name: "Integrations",
+    description: "Supports 100+ integrations and counting.",
     href: "#tools",
-    cta: "View Tools",
-    className: "col-span-3 lg:col-span-2",
+    cta: "Learn more",
+    className: "col-span-1 md:col-span-3 lg:col-span-2",
     background: (
       <IntegrationBeam className="absolute top-4 right-0 h-[300px] w-full [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)]" />
     ),
   },
   {
     Icon: Calendar,
-    name: "Fast Delivery",
-    description: "Quick turnaround times without compromising on quality.",
-    className: "col-span-3 lg:col-span-1",
+    name: "Calendar",
+    description: "Use the calendar to filter your files by date.",
+    className: "col-span-1 md:col-span-3 lg:col-span-1",
     href: "#contact",
-    cta: "Get Started",
+    cta: "Learn more",
     background: (
       <div className="absolute inset-0 flex items-center justify-center">
         <motion.div
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="text-8xl opacity-10"
+          className="text-8xl opacity-20"
         >
-          🚀
+          📅
         </motion.div>
       </div>
     ),
@@ -157,7 +158,7 @@ const features = [
 
 export default function BentoSection() {
   return (
-    <section id="capabilities" className="relative py-32 px-6 section-dark">
+    <section id="capabilities" className="relative py-16 md:py-32 px-4 md:px-6 bg-white dark:bg-background">
       <div className="max-w-6xl mx-auto">
         <div className="mb-16">
           <motion.span
@@ -165,7 +166,7 @@ export default function BentoSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-heading text-xs tracking-[0.3em] text-foreground-soft mb-4 block"
+            className="text-heading text-xs tracking-[0.3em] text-gray-500 dark:text-foreground-soft mb-4 block"
           >
             WHAT I DELIVER
           </motion.span>
