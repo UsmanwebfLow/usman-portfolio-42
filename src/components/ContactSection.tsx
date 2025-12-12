@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import GradientFillHeading from './GradientFillHeading';
-import { Send, Mail, MapPin, Phone, CreditCard } from 'lucide-react';
+import { Send, Mail, MapPin, Phone, CreditCard, Loader2 } from 'lucide-react';
 import { Instagram, Linkedin, Github } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 const socialLinks = [
   { icon: Instagram, href: 'https://www.instagram.com/usmanmughal14200691/', label: 'Instagram' },
@@ -79,15 +81,31 @@ export default function ContactSection() {
     service: '',
     message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! I will get back to you soon.');
+    setIsSubmitting(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('submit-contact', {
+        body: formData
+      });
+
+      if (error) throw error;
+
+      toast.success('Message sent successfully! I\'ll get back to you soon.');
+      setFormData({ name: '', email: '', phone: '', service: '', message: '' });
+    } catch (error) {
+      console.error('Submit error:', error);
+      toast.error('Failed to send message. Please try again or email directly.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -272,12 +290,22 @@ export default function ContactSection() {
                 
                 <motion.button
                   type="submit"
+                  disabled={isSubmitting}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full py-4 bg-foreground text-background font-heading tracking-wider flex items-center justify-center gap-3 mt-4 hover:bg-foreground/90 transition-colors text-sm md:text-base"
+                  className="w-full py-4 bg-foreground text-background font-heading tracking-wider flex items-center justify-center gap-3 mt-4 hover:bg-foreground/90 transition-colors text-sm md:text-base disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Send className="w-4 h-4" />
-                  SEND MESSAGE
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      SENDING...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      SEND MESSAGE
+                    </>
+                  )}
                 </motion.button>
               </form>
             </div>
