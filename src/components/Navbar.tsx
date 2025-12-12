@@ -40,7 +40,7 @@ export default function Navbar() {
             }}
             className="flex items-center"
           >
-            <img src={logo} alt="UA Logo" className="h-10 w-auto invert" />
+            <img src={logo} alt="UA Logo" className="h-10 w-auto brightness-0 invert" />
           </motion.a>
           
           {/* Desktop Navigation */}

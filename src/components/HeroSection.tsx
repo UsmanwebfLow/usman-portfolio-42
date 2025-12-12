@@ -2,14 +2,14 @@ import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Download } from 'lucide-react';
-import logo from '@/assets/logo.png';
+import { Download, ChevronDown } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -34,111 +34,102 @@ export default function HeroSection() {
     };
   }, []);
 
+  const handleDownloadCV = () => {
+    const link = document.createElement('a');
+    link.href = '/resume.pdf';
+    link.download = 'Usman_Ali_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <section 
       ref={sectionRef}
       id="hero-section"
-      className="relative h-screen w-full overflow-hidden section-dark"
+      className="relative h-screen w-full overflow-hidden"
     >
-      {/* Video Background - Fixed */}
-      <div className="absolute inset-0 z-0">
+      {/* Video Background */}
+      <div className="absolute inset-0 w-full h-full z-0">
         <video
+          ref={videoRef}
           autoPlay
           muted
           loop
           playsInline
-          className="absolute inset-0 w-full h-full object-cover object-center"
-          style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%' }}
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover"
         >
           <source src="/hero-video.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/50 to-background" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%' }} />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-background/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
       </div>
-      
-      {/* Logo - Top Left */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="absolute top-6 left-6 z-50"
-      >
-        <img src={logo} alt="UA Logo" className="h-12 w-auto invert" />
-      </motion.div>
       
       {/* Main content - Right aligned */}
       <div 
         ref={contentRef}
-        className="relative z-30 h-full flex flex-col items-end justify-center text-right px-6 md:px-16 lg:px-24"
+        className="relative z-30 h-full flex flex-col items-end justify-center text-right px-6 md:px-12 lg:px-24"
       >
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.3 }}
+        >
+          <span className="text-heading text-xs md:text-sm tracking-[0.4em] text-foreground-muted mb-4 block">
+            CREATIVE DEVELOPER
+          </span>
+        </motion.div>
+        
         <motion.h1
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="text-display text-[16vw] md:text-[12vw] lg:text-[10vw] text-foreground leading-[0.9]"
+          transition={{ duration: 1, delay: 0.5 }}
+          className="text-display text-[14vw] sm:text-[12vw] md:text-[10vw] lg:text-[9vw] text-foreground leading-[0.85] tracking-tight"
         >
           <span className="block">USMAN</span>
-          <span className="block">ALI</span>
+          <span className="block text-accent">ALI</span>
         </motion.h1>
         
         <motion.p
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.6 }}
-          className="text-heading text-sm md:text-base tracking-[0.3em] text-foreground-muted mt-8"
+          transition={{ duration: 1, delay: 0.8 }}
+          className="text-body text-sm md:text-base text-foreground-muted mt-6 max-w-md"
         >
-          WORDPRESS DEVELOPER | FUNNEL BUILDER
-          <br />
-          <span className="text-accent-warm">AUTOMATION SPECIALIST</span>
+          WordPress Developer • Funnel Builder • Automation Expert
         </motion.p>
         
         {/* Resume Download Button */}
-        <motion.a
-          href="/resume.pdf"
-          download="Usman_Ali_Resume.pdf"
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.9 }}
-          className="mt-10 inline-flex items-center gap-3 px-8 py-4 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-all duration-300 text-heading text-sm tracking-[0.2em]"
+        <motion.button
+          onClick={handleDownloadCV}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 1.1 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="mt-8 inline-flex items-center gap-3 px-8 py-4 bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-300 text-heading text-xs md:text-sm tracking-[0.15em] font-medium"
         >
           <Download className="w-4 h-4" />
           DOWNLOAD CV
-        </motion.a>
+        </motion.button>
       </div>
       
-      {/* Scroll indicator - circular text */}
+      {/* Scroll indicator */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 1.2 }}
-        className="absolute bottom-10 left-10 z-40"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center"
       >
-        <div className="relative w-24 h-24">
-          <svg 
-            viewBox="0 0 100 100" 
-            className="w-full h-full animate-spin-slow"
-          >
-            <defs>
-              <path
-                id="circlePath"
-                d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
-              />
-            </defs>
-            <text className="fill-foreground-muted text-[9px] uppercase tracking-[0.2em]">
-              <textPath href="#circlePath">
-                - Scroll to Explore - Scroll to Explore 
-              </textPath>
-            </text>
-          </svg>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <motion.div
-              animate={{ y: [0, 5, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="text-foreground"
-            >
-              ↓
-            </motion.div>
-          </div>
-        </div>
+        <span className="text-[10px] tracking-[0.3em] text-foreground-muted mb-2">SCROLL</span>
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+        >
+          <ChevronDown className="w-5 h-5 text-foreground-muted" />
+        </motion.div>
       </motion.div>
     </section>
   );

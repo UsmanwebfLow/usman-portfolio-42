@@ -11,7 +11,7 @@ export function BentoGrid({ children, className }: BentoGridProps) {
   return (
     <div
       className={cn(
-        "grid w-full auto-rows-[22rem] grid-cols-3 gap-4",
+        "grid w-full auto-rows-[18rem] md:auto-rows-[22rem] grid-cols-1 md:grid-cols-3 gap-4",
         className
       )}
     >
@@ -42,19 +42,19 @@ export function BentoCard({
   return (
     <div
       className={cn(
-        "group relative col-span-3 flex flex-col justify-between overflow-hidden rounded-xl",
-        "bg-background-muted border border-border",
-        "transform-gpu transition-all duration-300 hover:border-foreground/20",
+        "group relative col-span-1 md:col-span-3 flex flex-col justify-between overflow-hidden rounded-xl",
+        "bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800",
+        "transform-gpu transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-700 hover:shadow-lg",
         className
       )}
     >
       <div>{background}</div>
       <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6 transition-all duration-300 group-hover:-translate-y-10">
-        <Icon className="h-12 w-12 origin-left transform-gpu text-foreground-muted transition-all duration-300 ease-in-out group-hover:scale-75" />
-        <h3 className="text-xl font-semibold text-foreground font-heading tracking-wider">
+        <Icon className="h-12 w-12 origin-left transform-gpu text-gray-500 dark:text-gray-400 transition-all duration-300 ease-in-out group-hover:scale-75" />
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-white font-heading tracking-wider">
           {name}
         </h3>
-        <p className="max-w-lg text-foreground-muted text-sm">{description}</p>
+        <p className="max-w-lg text-gray-600 dark:text-gray-400 text-sm">{description}</p>
       </div>
 
       <div
@@ -64,13 +64,13 @@ export function BentoCard({
       >
         <a
           href={href}
-          className="pointer-events-auto inline-flex items-center gap-2 text-sm text-foreground font-heading tracking-wider hover:text-accent transition-colors"
+          className="pointer-events-auto inline-flex items-center gap-2 text-sm text-gray-900 dark:text-white font-heading tracking-wider hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
         >
           {cta}
           <ArrowRight className="h-4 w-4" />
         </a>
       </div>
-      <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-foreground/[.03]" />
+      <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-gray-50/50 dark:group-hover:bg-white/[.03]" />
     </div>
   );
 }

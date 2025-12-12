@@ -287,7 +287,7 @@ export default function ChatBot() {
             initial={{ opacity: 0, y: 100, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.8 }}
-            className="fixed bottom-6 right-6 z-50 w-[90vw] max-w-md h-[600px] bg-background-elevated border border-border rounded-lg shadow-2xl flex flex-col overflow-hidden"
+            className="fixed bottom-6 right-6 z-50 w-[90vw] max-w-md h-[80vh] max-h-[600px] bg-background-elevated border border-border rounded-lg shadow-2xl flex flex-col"
           >
             {/* Header */}
             <div className="p-4 border-b border-border bg-background-muted flex items-center justify-between">
@@ -312,7 +312,7 @@ export default function ChatBot() {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
               {messages.map((message) => (
                 <motion.div
                   key={message.id}
