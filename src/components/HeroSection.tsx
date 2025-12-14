@@ -49,8 +49,8 @@ export default function HeroSection() {
       id="hero-section"
       className="relative h-screen w-full overflow-hidden"
     >
-      {/* Video Background */}
-      <div className="absolute inset-0 w-full h-full z-0">
+      {/* Video Background - Fixed position */}
+      <div className="fixed inset-0 w-full h-full z-0">
         <video
           ref={videoRef}
           autoPlay
@@ -58,7 +58,8 @@ export default function HeroSection() {
           loop
           playsInline
           preload="auto"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="w-full h-full object-cover object-center"
+          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
         >
           <source src="/hero-video.mp4" type="video/mp4" />
         </video>
@@ -67,10 +68,10 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
       </div>
       
-      {/* Main content - Right aligned */}
+      {/* Main content - Left aligned */}
       <div 
         ref={contentRef}
-        className="relative z-30 h-full flex flex-col items-end justify-center text-right px-6 md:px-12 lg:px-24"
+        className="relative z-30 h-full flex flex-col items-start justify-center text-left px-6 md:px-12 lg:px-24"
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -83,7 +84,7 @@ export default function HeroSection() {
         </motion.div>
         
         <motion.h1
-          initial={{ opacity: 0, x: 50 }}
+          initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
           className="text-display text-[14vw] sm:text-[12vw] md:text-[10vw] lg:text-[9vw] text-foreground leading-[0.85] tracking-tight"
@@ -93,7 +94,7 @@ export default function HeroSection() {
         </motion.h1>
         
         <motion.p
-          initial={{ opacity: 0, x: 30 }}
+          initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.8 }}
           className="text-body text-sm md:text-base text-foreground-muted mt-6 max-w-md"
