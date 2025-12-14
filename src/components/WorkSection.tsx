@@ -2,12 +2,12 @@ import { motion } from 'framer-motion';
 import GradientFillHeading from './GradientFillHeading';
 
 const portfolioItems = [
-  { image: 'https://i.imghippo.com/files/Ru8121U.png', title: 'Real Estate', category: 'Visual / Branding' },
+  { image: 'https://i.imghippo.com/files/Ru8121U.png', title: 'Fitness One Landing Page', category: 'Visual / Branding' },
   { image: 'https://i.imghippo.com/files/DP5337EdE.png', title: '100 Million Woman', category: 'Art Direction' },
-  { image: 'https://i.imghippo.com/files/nFAY8010HLU.png', title: 'Fashion Shoot', category: 'Photography' },
-  { image: 'https://i.imghippo.com/files/PXUi3588rlo.png', title: 'Postorganic', category: 'Design / Branding' },
-  { image: 'https://i.imghippo.com/files/Cokp3232KW.png', title: 'Minimal Design', category: 'UI/UX' },
-  { image: 'https://i.imghippo.com/files/cO6833Ag.png', title: 'Brand Identity', category: 'Branding' },
+  { image: 'https://i.imghippo.com/files/nFAY8010HLU.png', title: 'Colin Real Estate', category: 'Photography' },
+  { image: 'https://i.imghippo.com/files/PXUi3588rlo.png', title: 'Real Estate Agency', category: 'Design / Branding' },
+  { image: 'https://i.imghippo.com/files/Cokp3232KW.png', title: 'Auto Cars Service', category: 'UI/UX' },
+  { image: 'https://i.imghippo.com/files/cO6833Ag.png', title: 'E-Commerce', category: 'Branding' },
 ];
 
 export default function WorkSection() {
