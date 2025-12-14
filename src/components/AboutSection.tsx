@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import GradientFillHeading from './GradientFillHeading';
 import { Download, MapPin, Mail, Phone } from 'lucide-react';
+import profileImage from '@/assets/profile.png';
 
 const stats = [
   { value: '50+', label: 'Projects Completed' },
@@ -63,8 +64,26 @@ export default function AboutSection() {
             </motion.div>
           </div>
           
-          {/* Right: Description */}
+          {/* Right: Description + Profile Image */}
           <div className="lg:pt-20">
+            {/* Profile Image */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="mb-10 flex justify-center lg:justify-start"
+            >
+              <div className="relative">
+                <img 
+                  src={profileImage} 
+                  alt="Usman Ali" 
+                  className="w-48 h-60 md:w-56 md:h-72 object-cover object-top grayscale hover:grayscale-0 transition-all duration-500"
+                />
+                <div className="absolute inset-0 border border-accent/30 -translate-x-3 -translate-y-3 pointer-events-none" />
+              </div>
+            </motion.div>
+            
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
