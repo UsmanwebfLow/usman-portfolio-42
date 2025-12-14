@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 import GradientFillHeading from './GradientFillHeading';
 
 const portfolioItems = [
-  { image: 'https://i.imghippo.com/files/Ru8121U.png', title: 'Tortillas', category: 'Visual / Branding' },
-  { image: 'https://i.imghippo.com/files/DP5337EdE.png', title: 'Coffee Shop', category: 'Art Direction' },
+  { image: 'https://i.imghippo.com/files/Ru8121U.png', title: 'Real Estate', category: 'Visual / Branding' },
+  { image: 'https://i.imghippo.com/files/DP5337EdE.png', title: '100 Million Woman', category: 'Art Direction' },
   { image: 'https://i.imghippo.com/files/nFAY8010HLU.png', title: 'Fashion Shoot', category: 'Photography' },
   { image: 'https://i.imghippo.com/files/PXUi3588rlo.png', title: 'Postorganic', category: 'Design / Branding' },
   { image: 'https://i.imghippo.com/files/Cokp3232KW.png', title: 'Minimal Design', category: 'UI/UX' },

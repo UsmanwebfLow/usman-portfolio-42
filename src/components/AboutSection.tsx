@@ -1,13 +1,11 @@
 import { motion } from 'framer-motion';
-import GradientFillHeading from './GradientFillHeading';
-import { Download, MapPin, Mail, Phone } from 'lucide-react';
+import { Download } from 'lucide-react';
 import profileImage from '@/assets/profile.png';
 
 const stats = [
-  { value: '50+', label: 'Projects Completed' },
-  { value: '30+', label: 'Happy Clients' },
-  { value: '3+', label: 'Years Experience' },
-  { value: '100%', label: 'Client Satisfaction' },
+  { value: '3+', label: 'YEARS EXPERIENCE' },
+  { value: '50+', label: 'PROJECTS COMPLETED' },
+  { value: '30+', label: 'HAPPY CLIENTS' },
 ];
 
 export default function AboutSection() {
@@ -17,139 +15,143 @@ export default function AboutSection() {
       className="relative min-h-screen py-32 px-6 section-darker"
     >
       <div className="max-w-6xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-20 items-start">
-          {/* Left: Section title */}
-          <div>
-            <motion.span
+        {/* Title */}
+        <motion.h2
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-display text-5xl md:text-6xl lg:text-7xl text-center mb-20 tracking-wider"
+        >
+          ABOUT ME
+        </motion.h2>
+        
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
+          {/* Left: Profile Image with decorative elements */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="relative"
+          >
+            {/* Decorative dots - top right */}
+            <div className="absolute -top-8 -right-4 md:right-0 grid grid-cols-3 gap-2">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="w-2 h-2 rounded-full bg-foreground-muted/40" />
+              ))}
+            </div>
+            
+            {/* Profile image */}
+            <div className="relative">
+              <img 
+                src={profileImage} 
+                alt="Usman Ali - Creative Developer" 
+                className="w-full max-w-md h-auto object-cover grayscale hover:grayscale-0 transition-all duration-500"
+              />
+            </div>
+            
+            {/* Decorative dots - bottom left */}
+            <div className="absolute -bottom-8 -left-4 md:left-0 grid grid-cols-3 gap-2">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="w-2 h-2 rounded-full bg-foreground-muted/40" />
+              ))}
+            </div>
+          </motion.div>
+          
+          {/* Right: Content */}
+          <div className="lg:pt-8">
+            <motion.h3
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
-              className="text-heading text-xs tracking-[0.3em] text-foreground-soft mb-4 block"
+              className="text-heading text-xl md:text-2xl tracking-[0.15em] text-foreground mb-6"
             >
-              ABOUT ME
-            </motion.span>
-            
-            <GradientFillHeading text="WORDPRESS" className="mb-2" />
-            <GradientFillHeading text="DEVELOPER" className="mb-2" />
+              CREATIVE DEVELOPER & DESIGNER
+            </motion.h3>
             
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-heading text-xl md:text-2xl tracking-[0.1em] text-foreground-muted mt-6"
+              className="text-body-light text-foreground-muted leading-relaxed mb-6"
             >
-              BASED IN LAHORE, PAKISTAN
+              I'm a passionate creative developer specializing in building exceptional digital 
+              experiences. With expertise in WordPress development, funnel building, and 
+              automation, I help businesses transform their online presence.
             </motion.p>
             
-            {/* Contact Info */}
-            <motion.div
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
-              className="mt-10 space-y-3"
+              className="text-body-light text-foreground-soft leading-relaxed mb-6"
             >
-              {[
-                { icon: Mail, text: 'usman755781@gmail.com' },
-                { icon: Phone, text: '+92 3259 438 262' },
-                { icon: MapPin, text: 'Darogawala, Lahore' },
-              ].map((item, idx) => (
-                <div key={idx} className="flex items-center gap-3 text-foreground-muted">
-                  <item.icon className="w-4 h-4 text-accent" />
-                  <span className="text-sm">{item.text}</span>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-          
-          {/* Right: Description + Profile Image */}
-          <div className="lg:pt-20">
-            {/* Profile Image */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="mb-10 flex justify-center lg:justify-start"
-            >
-              <div className="relative">
-                <img 
-                  src={profileImage} 
-                  alt="Usman Ali" 
-                  className="w-48 h-60 md:w-56 md:h-72 object-cover object-top grayscale hover:grayscale-0 transition-all duration-500"
-                />
-                <div className="absolute inset-0 border border-accent/30 -translate-x-3 -translate-y-3 pointer-events-none" />
-              </div>
-            </motion.div>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              viewport={{ once: true }}
-              className="text-body-light text-lg md:text-xl text-foreground-muted leading-relaxed mb-8"
-            >
-              Motivated and detail-oriented developer specializing in WordPress, 
-              GoHighLevel, ClickFunnels, and automation workflows using tools like n8n.
+              My approach combines clean code with stunning design, ensuring every project 
+              not only looks beautiful but performs flawlessly. I believe in creating solutions 
+              that are as functional as they are visually compelling.
             </motion.p>
             
             <motion.p
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
               viewport={{ once: true }}
-              className="text-body-light text-base text-foreground-soft leading-relaxed mb-12"
+              className="text-body-light text-foreground-soft leading-relaxed mb-10"
             >
-              Skilled in creating responsive websites, building high-converting funnels, 
-              and designing clean UI/UX using Figma and Canva. Currently working with 
-              Power Pack Technologies, contributing to modern digital solutions that 
-              boost business performance.
+              When I'm not coding, you'll find me exploring new design trends, learning 
+              emerging technologies, and pushing the boundaries of what's possible on the web.
             </motion.p>
             
+            {/* Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
               viewport={{ once: true }}
-              className="flex flex-wrap gap-4"
+              className="flex flex-wrap gap-4 mb-12"
             >
               <a
                 href="/resume.pdf"
                 download="Usman_Ali_Resume.pdf"
-                className="inline-flex items-center gap-3 px-6 py-3 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-all duration-300 text-heading text-xs tracking-[0.2em]"
+                className="inline-flex items-center gap-3 px-8 py-3 bg-gradient-to-r from-cyan-500 to-cyan-400 text-background font-medium rounded-full hover:opacity-90 transition-opacity text-sm tracking-wide"
               >
                 <Download className="w-4 h-4" />
-                DOWNLOAD CV
+                Download CV
               </a>
               
               <a
-                href="#work"
-                className="inline-flex items-center gap-4 px-6 py-3 text-heading text-xs tracking-[0.2em] text-foreground group"
+                href="#contact"
+                className="inline-flex items-center gap-3 px-8 py-3 border border-orange-500 text-orange-500 font-medium rounded-full hover:bg-orange-500 hover:text-background transition-all text-sm tracking-wide"
               >
-                VIEW WORK
-                <span className="w-8 h-px bg-foreground group-hover:w-12 transition-all duration-300" />
+                Let's Talk
               </a>
+            </motion.div>
+            
+            {/* Stats */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              viewport={{ once: true }}
+              className="flex flex-wrap gap-8 md:gap-12"
+            >
+              {stats.map((stat, idx) => (
+                <div key={idx} className="text-center">
+                  <span className="text-display text-3xl md:text-4xl bg-gradient-to-r from-cyan-400 to-cyan-300 bg-clip-text text-transparent">
+                    {stat.value}
+                  </span>
+                  <p className="text-xs tracking-[0.15em] text-foreground-muted mt-1 uppercase">
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
             </motion.div>
           </div>
         </div>
-        
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          viewport={{ once: true }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-24 pt-16 border-t border-border"
-        >
-          {stats.map((stat, idx) => (
-            <div key={idx} className="text-center">
-              <span className="text-display text-4xl md:text-5xl text-foreground">{stat.value}</span>
-              <p className="text-xs tracking-[0.2em] text-foreground-muted mt-2 uppercase">{stat.label}</p>
-            </div>
-          ))}
-        </motion.div>
       </div>
     </section>
   );

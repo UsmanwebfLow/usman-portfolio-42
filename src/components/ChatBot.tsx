@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
+import { X, Send, Loader2, Bot } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -176,7 +176,7 @@ export default function ChatBot() {
         animate={{ scale: isOpen ? 0 : 1 }}
         whileHover={{ scale: 1.1 }}
       >
-        <MessageCircle className="w-6 h-6 text-white" />
+        <Bot className="w-6 h-6 text-white" />
       </motion.button>
 
       {/* Chat Window */}
