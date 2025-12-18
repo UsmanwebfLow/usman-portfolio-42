@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Download } from 'lucide-react';
 import logo from '@/assets/logo.png';
+import { Button } from './ui/button';
 
 const navItems = [
   { label: 'HOME', href: '#hero-section' },
@@ -42,7 +43,7 @@ export default function Navbar() {
           >
             <img src={logo} alt="UA Logo" className="h-10 w-auto brightness-0 invert" />
           </motion.a>
-          
+
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-10">
             {navItems.map((item) => (
@@ -60,19 +61,22 @@ export default function Navbar() {
               </motion.a>
             ))}
           </div>
-          
+
           {/* CV Download Button */}
-          <motion.a
-            href="/resume.pdf"
-            download="Usman_Ali_Resume.pdf"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="hidden md:flex items-center gap-2 px-6 py-3 border border-foreground text-heading text-xs tracking-[0.2em] hover:bg-foreground hover:text-background transition-all"
+          <Button
+            asChild
+            size="sm"
+            className="hidden md:flex"
           >
-            <Download className="w-4 h-4" />
-            CV
-          </motion.a>
-          
+            <a
+              href="/resume.pdf"
+              download="Usman_Ali_Resume.pdf"
+            >
+              <Download className="w-4 h-4" />
+              CV
+            </a>
+          </Button>
+
           {/* Mobile menu button */}
           <motion.button
             whileTap={{ scale: 0.95 }}
@@ -83,7 +87,7 @@ export default function Navbar() {
           </motion.button>
         </div>
       </motion.nav>
-      
+
       {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (

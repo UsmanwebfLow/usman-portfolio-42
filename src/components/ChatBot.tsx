@@ -36,21 +36,21 @@ export default function ChatBot() {
 
   const handleSend = async () => {
     if (!input.trim() || isTyping) return;
-    
+
     const userMessage: Message = {
       id: Date.now().toString(),
       role: 'user',
       content: input,
     };
-    
+
     setMessages(prev => [...prev, userMessage]);
     const currentInput = input;
     setInput('');
     setIsTyping(true);
-    
+
     let assistantContent = "";
     const assistantId = (Date.now() + 1).toString();
-    
+
     try {
       const chatMessages = [...messages.filter(m => m.id !== '1'), userMessage].map(m => ({
         role: m.role,
@@ -106,7 +106,7 @@ export default function ChatBot() {
             const content = parsed.choices?.[0]?.delta?.content as string | undefined;
             if (content) {
               assistantContent += content;
-              setMessages(prev => 
+              setMessages(prev =>
                 prev.map(m => m.id === assistantId ? { ...m, content: assistantContent } : m)
               );
             }
@@ -131,7 +131,7 @@ export default function ChatBot() {
             const content = parsed.choices?.[0]?.delta?.content as string | undefined;
             if (content) {
               assistantContent += content;
-              setMessages(prev => 
+              setMessages(prev =>
                 prev.map(m => m.id === assistantId ? { ...m, content: assistantContent } : m)
               );
             }
@@ -142,10 +142,10 @@ export default function ChatBot() {
     } catch (error) {
       console.error("Chat error:", error);
       const errorMessage = error instanceof Error ? error.message : "Something went wrong";
-      setMessages(prev => [...prev, { 
-        id: assistantId, 
-        role: 'assistant', 
-        content: `Sorry, ${errorMessage}. Feel free to reach out directly at usman755781@gmail.com or +92 308 286 0795!` 
+      setMessages(prev => [...prev, {
+        id: assistantId,
+        role: 'assistant',
+        content: `Sorry, ${errorMessage}. Feel free to reach out directly at usman755781@gmail.com or +92 308 286 0795!`
       }]);
     } finally {
       setIsTyping(false);
@@ -171,12 +171,12 @@ export default function ChatBot() {
       {/* Chat Button */}
       <motion.button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-shadow"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-lg shadow-white/20 hover:shadow-white/40 transition-shadow"
         initial={{ scale: 0 }}
         animate={{ scale: isOpen ? 0 : 1 }}
         whileHover={{ scale: 1.1 }}
       >
-        <Bot className="w-6 h-6 text-white" />
+        <Bot className="w-6 h-6 text-black" />
       </motion.button>
 
       {/* Chat Window */}
@@ -186,17 +186,17 @@ export default function ChatBot() {
             initial={{ opacity: 0, y: 100, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.8 }}
-            className="fixed bottom-6 right-6 z-50 w-[90vw] max-w-md h-[80vh] max-h-[600px] bg-[#0f0f0f] border border-white/10 rounded-2xl shadow-2xl shadow-black/50 flex flex-col overflow-hidden"
+            className="fixed bottom-6 right-6 z-50 w-[90vw] max-w-md h-[80vh] max-h-[600px] bg-white border border-gray-200 rounded-2xl shadow-2xl shadow-black/20 flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="p-4 border-b border-white/10 bg-gradient-to-r from-cyan-500/10 to-blue-600/10 flex items-center justify-between">
+            <div className="p-4 border-b border-black/5 bg-white flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center">
                   <span className="text-white font-bold text-sm">UA</span>
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold text-white">Usman's Assistant</h3>
-                  <p className="text-xs text-gray-400 flex items-center gap-1.5">
+                  <h3 className="text-sm font-semibold text-black">Usman's Assistant</h3>
+                  <p className="text-xs text-gray-500 flex items-center gap-1.5">
                     <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
                     Online • Here to help
                   </p>
@@ -204,16 +204,16 @@ export default function ChatBot() {
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-gray-400 hover:text-white transition-colors p-1"
+                className="text-gray-400 hover:text-black transition-colors p-1"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Messages */}
-            <div 
+            <div
               ref={messagesContainerRef}
-              className="flex-1 overflow-y-auto p-4 space-y-4"
+              className="flex-1 overflow-y-auto p-4 space-y-4 bg-white"
               style={{ scrollBehavior: 'smooth' }}
             >
               {messages.map((message) => (
@@ -224,45 +224,44 @@ export default function ChatBot() {
                   className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed ${
-                      message.role === 'user'
-                        ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-br-md'
-                        : 'bg-white/10 text-gray-100 rounded-bl-md'
-                    }`}
+                    className={`max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed shadow-sm ${message.role === 'user'
+                      ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-br-md'
+                      : 'bg-gray-100 text-gray-800 rounded-bl-md border border-gray-100'
+                      }`}
                   >
                     <div className="whitespace-pre-wrap">{message.content}</div>
                   </div>
                 </motion.div>
               ))}
-              
+
               {isTyping && (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="flex justify-start"
                 >
-                  <div className="bg-white/10 p-3 rounded-2xl rounded-bl-md flex items-center gap-2">
+                  <div className="bg-gray-100 p-3 rounded-2xl rounded-bl-md flex items-center gap-2">
                     <div className="flex gap-1">
-                      <span className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                      <span className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                      <span className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                      <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                      <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                      <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                     </div>
                   </div>
                 </motion.div>
               )}
-              
+
               <div ref={messagesEndRef} />
             </div>
 
             {/* Quick Actions */}
-            <div className="px-4 py-2 flex gap-2 overflow-x-auto border-t border-white/5 bg-white/5">
+            <div className="px-4 py-2 flex gap-2 overflow-x-auto border-t border-black/5 bg-gray-50">
               {quickActions.map((action) => (
                 <button
                   key={action.label}
                   onClick={() => {
                     setInput(action.text);
                   }}
-                  className="flex-shrink-0 px-3 py-1.5 text-xs border border-white/10 rounded-full hover:bg-white/10 transition-colors text-gray-300 hover:text-white"
+                  className="flex-shrink-0 px-3 py-1.5 text-xs border border-black/5 rounded-full hover:bg-black/5 transition-colors text-gray-600 hover:text-black bg-white shadow-sm"
                 >
                   {action.label}
                 </button>
@@ -270,7 +269,7 @@ export default function ChatBot() {
             </div>
 
             {/* Input */}
-            <div className="p-4 border-t border-white/10 bg-black/50">
+            <div className="p-4 border-t border-black/5 bg-white">
               <div className="flex items-center gap-2">
                 <input
                   type="text"
@@ -279,12 +278,12 @@ export default function ChatBot() {
                   onKeyPress={handleKeyPress}
                   placeholder="Type your message..."
                   disabled={isTyping}
-                  className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan-500/50 transition-colors text-sm disabled:opacity-50"
+                  className="flex-1 px-4 py-3 bg-gray-50 border border-black/5 rounded-xl text-black placeholder:text-gray-400 focus:outline-none focus:border-black/10 transition-colors text-sm disabled:opacity-50"
                 />
                 <button
                   onClick={handleSend}
                   disabled={isTyping || !input.trim()}
-                  className="p-3 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl text-white hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-3 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl text-white hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
                 >
                   {isTyping ? (
                     <Loader2 className="w-5 h-5 animate-spin" />

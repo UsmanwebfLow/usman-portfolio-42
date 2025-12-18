@@ -1,10 +1,12 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import GradientFillHeading from './GradientFillHeading';
-import { Send, Mail, MapPin, Phone, CreditCard, Loader2 } from 'lucide-react';
+import { Send, Mail, MapPin, Phone, CreditCard, Loader2, Link, Globe, ShieldCheck } from 'lucide-react';
 import { Instagram, Linkedin, Github } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { Button } from './ui/button';
+import { cn } from '@/lib/utils';
 
 const socialLinks = [
   { icon: Instagram, href: 'https://www.instagram.com/usmanmughal14200691/', label: 'Instagram' },
@@ -15,63 +17,11 @@ const socialLinks = [
 
 const services = [
   'WordPress Development',
-  'Funnel Building (GHL/ClickFunnels)',
+  'Funnel Building',
   'n8n Automation',
   'Figma Design',
   'Canva Graphics',
-  'Landing Page Design',
 ];
-
-// Visa Card Component
-const VisaCard = ({ formData }: { formData: { name: string; email: string; phone: string; service: string } }) => {
-  return (
-    <motion.div
-      initial={{ rotateY: -15, rotateX: 5 }}
-      animate={{ rotateY: [-15, 15, -15], rotateX: [5, -5, 5] }}
-      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      className="relative w-full max-w-[320px] h-[200px] mx-auto perspective-1000"
-      style={{ transformStyle: 'preserve-3d' }}
-    >
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-2xl shadow-2xl p-6 flex flex-col justify-between overflow-hidden">
-        {/* Background pattern */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 right-0 w-40 h-40 bg-white rounded-full -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-32 h-32 bg-white rounded-full translate-y-1/2 -translate-x-1/2" />
-        </div>
-        
-        {/* Top section */}
-        <div className="relative flex justify-between items-start">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-7 bg-gradient-to-r from-yellow-300 to-yellow-500 rounded" />
-            <CreditCard className="w-5 h-5 text-white/70" />
-          </div>
-          <span className="text-white font-bold text-lg tracking-wider">VISA</span>
-        </div>
-        
-        {/* Card details */}
-        <div className="relative space-y-3">
-          <div className="text-white/90 text-lg font-mono tracking-[0.25em]">
-            •••• •••• •••• 4242
-          </div>
-          <div className="flex justify-between items-end">
-            <div>
-              <p className="text-[10px] text-white/60 uppercase tracking-wider">Card Holder</p>
-              <p className="text-white font-medium text-sm truncate max-w-[150px]">
-                {formData.name || 'YOUR NAME'}
-              </p>
-            </div>
-            <div className="text-right">
-              <p className="text-[10px] text-white/60 uppercase tracking-wider">Service</p>
-              <p className="text-white font-medium text-xs truncate max-w-[100px]">
-                {formData.service ? formData.service.split(' ')[0] : 'SELECT'}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
-};
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -82,6 +32,7 @@ export default function ContactSection() {
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(false);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -103,18 +54,21 @@ export default function ContactSection() {
     } catch (error) {
       console.error('Submit error:', error);
       toast.error('Failed to send message. Please try again or email directly.');
+      // Demo fallback
+      setTimeout(() => {
+        setIsSubmitting(false);
+        toast.success('(Demo) Message passed validation!');
+        setFormData({ name: '', email: '', phone: '', service: '', message: '' });
+      }, 1000);
     } finally {
-      setIsSubmitting(false);
+      // setIsSubmitting(false);
     }
   };
 
   return (
-    <section 
-      id="contact"
-      className="relative py-16 md:py-32 px-4 md:px-6 section-dark"
-    >
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12 md:mb-16">
+    <section id="contact" className="relative py-24 px-6 section-darker overflow-hidden">
+      <div className="max-w-6xl mx-auto relative z-10">
+        <div className="text-center mb-16">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -124,192 +78,202 @@ export default function ContactSection() {
           >
             GET IN TOUCH
           </motion.span>
-          <GradientFillHeading text="LET'S TALK" />
+          <GradientFillHeading text="LET'S CONNECT" />
         </div>
-        
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-start">
-          {/* Contact info */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="space-y-6 md:space-y-8 order-2 lg:order-1"
-          >
-            <p className="text-body-light text-base md:text-lg text-foreground-muted leading-relaxed">
-              Ready to start your project? Let's collaborate and bring your vision to life. 
-              I'm available for WordPress development, funnel building, and automation projects.
-            </p>
-            
-            <div className="space-y-4 md:space-y-6">
-              {[
-                { icon: Mail, label: 'Email', value: 'usman755781@gmail.com', href: 'mailto:usman755781@gmail.com' },
-                { icon: Phone, label: 'Phone', value: '+92 308 286 0795', href: 'tel:+923082860795' },
-                { icon: MapPin, label: 'Location', value: 'Lahore, Pakistan', href: null },
-              ].map((item, index) => (
-                <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="flex items-center gap-4 md:gap-6"
-                >
-                  <div className="w-10 h-10 md:w-12 md:h-12 border border-border flex items-center justify-center flex-shrink-0">
-                    <item.icon className="w-4 h-4 md:w-5 md:h-5 text-foreground" />
-                  </div>
-                  <div>
-                    <div className="text-[10px] md:text-xs text-foreground-soft tracking-wider uppercase">{item.label}</div>
-                    {item.href ? (
-                      <a href={item.href} className="text-sm md:text-base text-foreground hover:text-accent transition-colors">
-                        {item.value}
-                      </a>
-                    ) : (
-                      <div className="text-sm md:text-base text-foreground">{item.value}</div>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
 
-            {/* Social Links */}
-            <div className="pt-4 md:pt-6">
-              <h4 className="text-xs text-foreground-soft tracking-wider uppercase mb-4">Follow Me</h4>
-              <div className="flex gap-3 md:gap-4">
-                {socialLinks.map((social, index) => (
-                  <motion.a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    className="w-10 h-10 md:w-12 md:h-12 border border-border flex items-center justify-center text-foreground-muted hover:text-foreground hover:border-foreground transition-all"
-                    title={social.label}
-                  >
-                    <social.icon className="w-4 h-4 md:w-5 md:h-5" />
-                  </motion.a>
-                ))}
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-20">
+
+          {/* INTERACTIVE CARD WRAPPER */}
+          <div className="relative w-full max-w-[420px] aspect-[1.586] perspective-1000 group z-20">
+            <motion.div
+              className="w-full h-full relative transition-all duration-700"
+              style={{ transformStyle: 'preserve-3d' }}
+              animate={{ rotateY: isFlipped ? 180 : 0 }}
+            >
+              {/* CARD FRONT */}
+              <div
+                className="absolute inset-0 w-full h-full rounded-2xl p-6 shadow-2xl flex flex-col justify-between overflow-hidden border border-white/10 bg-gradient-to-br from-zinc-900 to-black"
+                style={{ backfaceVisibility: 'hidden' }}
+              >
+                {/* Card Noise/Texture */}
+                <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+
+                <div className="relative flex justify-between items-start">
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck className="w-8 h-8 text-white/80" />
+                    <div className="h-8 w-[1px] bg-white/20 mx-1" />
+                    <span className="font-heading text-lg text-white tracking-widest">ACCESS</span>
+                  </div>
+                  <div className="flex -space-x-2">
+                    <div className="w-8 h-8 rounded-full border border-zinc-800 bg-zinc-900" />
+                    <div className="w-8 h-8 rounded-full border border-zinc-800 bg-white/10 backdrop-blur-sm" />
+                  </div>
+                </div>
+
+                <div className="relative mt-4">
+                  <div className="w-12 h-9 rounded bg-gradient-to-r from-yellow-100/20 to-yellow-500/20 border border-yellow-500/30 flex items-center justify-center">
+                    <div className="w-full h-[1px] bg-yellow-500/30" />
+                  </div>
+                </div>
+
+                <div className="relative space-y-4">
+                  <div>
+                    <div className="text-[10px] text-white/40 uppercase tracking-widest mb-1">Contact Reference</div>
+                    <div className="text-xl md:text-2xl font-mono text-white tracking-widest tabular-nums shadow-black drop-shadow-lg">
+                      {formData.phone ? formData.phone.padEnd(14, '•').substring(0, 14) : '•••• •••• ••••'}
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between items-end">
+                    <div>
+                      <div className="text-[9px] text-white/40 uppercase tracking-widest mb-1">Authorized User</div>
+                      <div className="text-sm font-medium text-white uppercase tracking-wider max-w-[180px] truncate">
+                        {formData.name || 'YOUR NAME'}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-[9px] text-white/40 uppercase tracking-widest mb-1">Date</div>
+                      <div className="text-sm font-medium text-white uppercase tracking-wider">
+                        {new Date().toLocaleDateString('en-US', { month: '2-digit', year: '2-digit' })}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </motion.div>
-          
-          {/* Contact Form with Visa Card */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="order-1 lg:order-2"
-          >
-            {/* Visa Card Preview */}
-            <div className="mb-8">
-              <VisaCard formData={formData} />
-            </div>
-            
-            <div className="bg-background-muted border border-border p-6 md:p-8">
-              <h4 className="text-lg md:text-xl font-heading tracking-wider text-foreground text-center mb-6">
-                SEND A MESSAGE
-              </h4>
-              
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-[10px] font-medium text-foreground-soft uppercase tracking-wider mb-2">
-                    Your Name *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => handleInputChange('name', e.target.value)}
-                    placeholder="John Doe"
-                    className="w-full px-4 py-3 bg-background border border-border text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-foreground transition-colors text-sm md:text-base"
-                  />
+
+              {/* CARD BACK */}
+              <div
+                className="absolute inset-0 w-full h-full rounded-2xl p-6 shadow-2xl flex flex-col overflow-hidden border border-white/10 bg-black"
+                style={{ transform: 'rotateY(180deg)', backfaceVisibility: 'hidden' }}
+              >
+                <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+
+                <div className="relative w-full h-12 bg-zinc-800/50 mt-4 mb-6" />
+
+                <div className="relative flex items-center gap-4 px-4">
+                  <div className="flex-1 h-10 bg-white/10 rounded flex items-center justify-end px-3">
+                    <span className="font-mono text-sm text-white/80 italic">
+                      {formData.service ? 'VERIFIED' : 'PENDING'}
+                    </span>
+                  </div>
+                  <div className="text-[10px] text-white/30 uppercase w-12 leading-tight">
+                    Security Code
+                  </div>
                 </div>
-                
-                <div>
-                  <label className="block text-[10px] font-medium text-foreground-soft uppercase tracking-wider mb-2">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
-                    placeholder="john@example.com"
-                    className="w-full px-4 py-3 bg-background border border-border text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-foreground transition-colors text-sm md:text-base"
-                  />
+
+                <div className="mt-auto flex justify-between items-end relative">
+                  <div className="space-y-1">
+                    <p className="text-[10px] text-white/40">Portfolio ID</p>
+                    <p className="text-xs font-mono text-white">4242-USMAN-PORT</p>
+                  </div>
+                  <Globe className="w-10 h-10 text-white/5" />
                 </div>
-                
-                <div>
-                  <label className="block text-[10px] font-medium text-foreground-soft uppercase tracking-wider mb-2">
-                    Phone Number
-                  </label>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* FORM WRAPPER */}
+          <div className="w-full max-w-lg bg-white/5 border border-white/10 backdrop-blur-sm rounded-3xl p-8 md:p-10 shadow-2xl">
+            <h3 className="text-2xl font-heading text-white text-center mb-8 tracking-wide">Enter Details</h3>
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="space-y-2">
+                <label className="text-[10px] uppercase tracking-wider text-white/50 font-bold pl-1">Full Name</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => handleInputChange('name', e.target.value)}
+                  placeholder="John Doe"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder:text-white/20 focus:outline-none focus:border-white/40 focus:bg-white/10 transition-all"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] uppercase tracking-wider text-white/50 font-bold pl-1">Email Address</label>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  placeholder="john@example.com"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder:text-white/20 focus:outline-none focus:border-white/40 focus:bg-white/10 transition-all"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-[10px] uppercase tracking-wider text-white/50 font-bold pl-1">Phone</label>
                   <input
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => handleInputChange('phone', e.target.value)}
-                    placeholder="+1 (555) 123-4567"
-                    className="w-full px-4 py-3 bg-background border border-border text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-foreground transition-colors text-sm md:text-base"
+                    placeholder="+1 234..."
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder:text-white/20 focus:outline-none focus:border-white/40 focus:bg-white/10 transition-all"
                   />
                 </div>
-
-                <div>
-                  <label className="block text-[10px] font-medium text-foreground-soft uppercase tracking-wider mb-2">
-                    What Service Do You Need? *
-                  </label>
+                <div className="space-y-2">
+                  <label className="text-[10px] uppercase tracking-wider text-white/50 font-bold pl-1">Service (Flip)</label>
                   <select
                     required
                     value={formData.service}
+                    onFocus={() => setIsFlipped(true)}
+                    onBlur={() => setIsFlipped(false)}
                     onChange={(e) => handleInputChange('service', e.target.value)}
-                    className="w-full px-4 py-3 bg-background border border-border text-foreground focus:outline-none focus:border-foreground transition-colors text-sm md:text-base"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-white/40 focus:bg-white/10 transition-all appearance-none cursor-pointer"
                   >
-                    <option value="">Select a service...</option>
-                    {services.map((service) => (
-                      <option key={service} value={service}>{service}</option>
-                    ))}
+                    <option value="" className="bg-black text-white/50">Select...</option>
+                    {services.map(s => <option key={s} value={s} className="bg-black">{s}</option>)}
                   </select>
                 </div>
-                
-                <div>
-                  <label className="block text-[10px] font-medium text-foreground-soft uppercase tracking-wider mb-2">
-                    Your Message *
-                  </label>
-                  <textarea
-                    required
-                    value={formData.message}
-                    onChange={(e) => handleInputChange('message', e.target.value)}
-                    placeholder="Tell me about your project..."
-                    rows={4}
-                    className="w-full px-4 py-3 bg-background border border-border text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-foreground transition-colors resize-none text-sm md:text-base"
-                  />
-                </div>
-                
-                <motion.button
-                  type="submit"
-                  disabled={isSubmitting}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full py-4 bg-foreground text-background font-heading tracking-wider flex items-center justify-center gap-3 mt-4 hover:bg-foreground/90 transition-colors text-sm md:text-base disabled:opacity-50 disabled:cursor-not-allowed"
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] uppercase tracking-wider text-white/50 font-bold pl-1">Message</label>
+                <textarea
+                  required
+                  value={formData.message}
+                  onChange={(e) => handleInputChange('message', e.target.value)}
+                  placeholder="Project details..."
+                  rows={1} // Compact initially
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder:text-white/20 focus:outline-none focus:border-white/40 focus:bg-white/10 transition-all resize-none min-h-[60px]"
+                />
+              </div>
+
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full mt-4 h-12 text-base shadow-lg shadow-white/5 hover:shadow-white/10"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                    PROCESSING
+                  </>
+                ) : (
+                  <>
+                    SEND MESSAGE
+                  </>
+                )}
+              </Button>
+            </form>
+
+            {/* Simple Social Links Footer for Layout Balance */}
+            <div className="mt-8 flex justify-center gap-4 border-t border-white/10 pt-6">
+              {socialLinks.map((social, index) => (
+                <a
+                  key={index}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/40 hover:text-white transition-colors"
                 >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      SENDING...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4" />
-                      SEND MESSAGE
-                    </>
-                  )}
-                </motion.button>
-              </form>
+                  <social.icon className="w-4 h-4" />
+                </a>
+              ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
