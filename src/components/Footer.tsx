@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Twitter, Instagram } from 'lucide-react';
+import { Github, Linkedin, Instagram } from 'lucide-react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -29,16 +29,33 @@ export default function Footer() {
             viewport={{ once: true }}
             className="flex gap-6"
           >
-            {[Github, Linkedin, Twitter, Instagram].map((Icon, index) => (
-              <motion.a
-                key={index}
-                href="#"
-                whileHover={{ y: -3 }}
-                className="text-foreground-muted hover:text-foreground transition-colors"
-              >
-                <Icon className="w-4 h-4" />
-              </motion.a>
-            ))}
+            <motion.a
+              href="https://github.com/"
+              whileHover={{ y: -3 }}
+              className="text-foreground-muted hover:text-foreground transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Github className="w-4 h-4" />
+            </motion.a>
+            <motion.a
+              href="https://www.linkedin.com/in/usman-ali-a15221367/"
+              whileHover={{ y: -3 }}
+              className="text-foreground-muted hover:text-foreground transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Linkedin className="w-4 h-4" />
+            </motion.a>
+            <motion.a
+              href="https://www.instagram.com/usmanmughal14200691/"
+              whileHover={{ y: -3 }}
+              className="text-foreground-muted hover:text-foreground transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Instagram className="w-4 h-4" />
+            </motion.a>
           </motion.div>
           
           {/* Copyright */}

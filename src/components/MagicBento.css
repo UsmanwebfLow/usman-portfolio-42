@@ -1,0 +1,704 @@
+/* Team video overlay */
+.team-video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* Video background for analytics card */
+.analytics-video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.dashboard-video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.integration-video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.security-video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.automation-video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Hover text effect */
+.magic-bento-card--hover-text .magic-bento-card__header,
+.magic-bento-card--hover-text .magic-bento-card__content {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.magic-bento-card--hover-text:hover .magic-bento-card__header,
+.magic-bento-card--hover-text:hover .magic-bento-card__content {
+  opacity: 1;
+}
+
+/* Overlay effect - hidden by default, shown on hover */
+.magic-bento-card--hover-text::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.magic-bento-card--hover-text:hover::before {
+  opacity: 1;
+}
+
+/* Ensure content stays above overlay */
+.magic-bento-card--hover-text .magic-bento-card__header,
+.magic-bento-card--hover-text .magic-bento-card__content {
+  position: relative;
+  z-index: 3;
+}
+
+.video-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 80%;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+}
+
+.play-icon {
+  font-size: 32px;
+  color: white;
+  margin-bottom: 12px;
+}
+
+.video-label {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Data flow animation */
+.data-flow-animation {
+  position: absolute;
+  top: 20%;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  z-index: 1;
+}
+
+.data-point {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  animation: dataFlow 3s infinite linear;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+@keyframes dataFlow {
+  0% {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(calc(100vw + 20px));
+    opacity: 0;
+  }
+}
+
+/* Dashboard UI animation */
+.dashboard-ui-animation {
+  position: absolute;
+  top: 15%;
+  left: 10%;
+  width: 80%;
+  height: 70%;
+  z-index: 1;
+}
+
+.ui-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  height: 100%;
+}
+
+.ui-element {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  animation: uiPulse 2s infinite ease-in-out;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
+}
+
+@keyframes uiPulse {
+  0%, 100% {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1);
+  }
+  50% {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+  }
+}
+
+/* Team connect animation */
+.team-connect-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.team-members {
+  position: absolute;
+  top: 30%;
+  width: 100%;
+  height: 40px;
+}
+
+.team-member {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  animation: teamBounce 3s infinite ease-in-out;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+.connection-lines {
+  position: absolute;
+  top: 45%;
+  left: 10%;
+  width: 80%;
+  height: 2px;
+  background: linear-gradient(to right, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.6) 50%, 
+    transparent 100%);
+  animation: linePulse 2s infinite ease-in-out;
+}
+
+@keyframes teamBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes linePulse {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Process chain animation */
+.process-chain-animation {
+  position: absolute;
+  top: 30%;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  z-index: 1;
+}
+
+.process-elements {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.process-element {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  animation: processRotate 4s infinite linear;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gear-icon {
+  width: 16px;
+  height: 16px;
+  background: 
+    radial-gradient(circle, transparent 40%, white 40%, white 60%, transparent 60%),
+    radial-gradient(circle at 30% 30%, white 20%, transparent 20%),
+    radial-gradient(circle at 70% 30%, white 20%, transparent 20%),
+    radial-gradient(circle at 30% 70%, white 20%, transparent 20%),
+    radial-gradient(circle at 70% 70%, white 20%, transparent 20%);
+  border-radius: 50%;
+}
+
+@keyframes processRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* API connect animation */
+.api-connect-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.api-nodes {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.api-node {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+.node-1 {
+  top: 20%;
+  left: 20%;
+  animation: nodePulse 2s infinite ease-in-out;
+}
+
+.node-2 {
+  top: 50%;
+  left: 50%;
+  animation: nodePulse 2s infinite ease-in-out 0.5s;
+}
+
+.node-3 {
+  top: 80%;
+  left: 80%;
+  animation: nodePulse 2s infinite ease-in-out 1s;
+}
+
+.api-connections {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(45deg, transparent 49.5%, rgba(255, 255, 255, 0.3) 49.5%, rgba(255, 255, 255, 0.3) 50.5%, transparent 50.5%),
+    linear-gradient(-45deg, transparent 49.5%, rgba(255, 255, 255, 0.3) 49.5%, rgba(255, 255, 255, 0.3) 50.5%, transparent 50.5%);
+  animation: connectionFlow 3s infinite linear;
+  opacity: 0.5;
+}
+
+@keyframes nodePulse {
+  0%, 100% {
+    transform: scale(1);
+    background: rgba(255, 255, 255, 0.8);
+  }
+  50% {
+    transform: scale(1.2);
+    background: rgba(255, 255, 255, 1);
+  }
+}
+
+@keyframes connectionFlow {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100px 100px;
+  }
+}
+
+/* Shield pulse animation */
+.shield-pulse-animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  z-index: 1;
+}
+
+.shield-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle, transparent 40%, white 40%, white 50%, transparent 50%),
+    linear-gradient(to bottom, transparent 30%, white 30%, white 70%, transparent 70%);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  animation: shieldPulse 3s infinite ease-in-out;
+}
+
+.pulse-waves {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+}
+
+.pulse-wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  animation: pulseExpand 3s infinite ease-out;
+}
+
+.wave-1 {
+  animation-delay: 0s;
+}
+
+.wave-2 {
+  animation-delay: 1s;
+}
+
+.wave-3 {
+  animation-delay: 2s;
+}
+
+@keyframes pulseExpand {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes shieldPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+:root {
+  --hue: 0;
+  --sat: 0%;
+  --white: hsl(0, 0%, 100%);
+  --black: hsl(0, 0%, 0%);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --background-dark: #000000;
+  --white-glow: rgba(255, 255, 255, 0.3);
+  --white-border: rgba(255, 255, 255, 0.8);
+  color-scheme: light dark;
+}
+
+.card-grid {
+  display: grid;
+  gap: 0.5em;
+  padding: 0.75em;
+  max-width: 54em;
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
+}
+
+.magic-bento-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  aspect-ratio: 4/3;
+  min-height: 200px;
+  width: 100%;
+  max-width: 100%;
+  padding: 1.25em;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  background: var(--background-dark);
+  font-weight: 300;
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  --glow-x: 50%;
+  --glow-y: 50%;
+  --glow-intensity: 0;
+  --glow-radius: 200px;
+}
+
+.magic-bento-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Video background styles */
+.magic-bento-video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.magic-bento-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+.magic-bento-card:hover .magic-bento-video {
+  opacity: 0.5;
+}
+
+.magic-bento-video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.9) 100%);
+  z-index: 1;
+}
+
+.magic-bento-card__header,
+.magic-bento-card__content {
+  display: flex;
+  position: relative;
+  color: var(--white);
+  z-index: 2;
+}
+
+.magic-bento-card__header {
+  gap: 0.75em;
+  justify-content: space-between;
+}
+
+.magic-bento-card__content {
+  flex-direction: column;
+}
+
+.magic-bento-card__label {
+  font-size: 16px;
+}
+
+.magic-bento-card__title,
+.magic-bento-card__description {
+  --clamp-title: 1;
+  --clamp-desc: 2;
+}
+
+.magic-bento-card__title {
+  font-weight: 400;
+  font-size: 16px;
+  margin: 0 0 0.25em;
+}
+
+.magic-bento-card__description {
+  font-size: 12px;
+  line-height: 1.2;
+  opacity: 0.9;
+}
+
+.magic-bento-card--text-autohide .magic-bento-card__title,
+.magic-bento-card--text-autohide .magic-bento-card__description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.magic-bento-card--text-autohide .magic-bento-card__title {
+  -webkit-line-clamp: var(--clamp-title);
+  line-clamp: var(--clamp-title);
+}
+
+.magic-bento-card--text-autohide .magic-bento-card__description {
+  -webkit-line-clamp: var(--clamp-desc);
+  line-clamp: var(--clamp-desc);
+}
+
+@media (max-width: 599px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+    width: 90%;
+    margin: 0 auto;
+    padding: 0.5em;
+  }
+
+  .magic-bento-card {
+    width: 100%;
+    min-height: 180px;
+  }
+}
+
+@media (min-width: 600px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .magic-bento-card:nth-child(3) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .magic-bento-card:nth-child(4) {
+    grid-column: 1 / span 2;
+    grid-row: 2 / span 2;
+  }
+
+  .magic-bento-card:nth-child(6) {
+    grid-column: 4;
+    grid-row: 3;
+  }
+}
+
+/* Border glow effect */
+.magic-bento-card--border-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 6px;
+  background: radial-gradient(
+    var(--glow-radius) circle at var(--glow-x) var(--glow-y),
+    rgba(255, 255, 255, calc(var(--glow-intensity) * 0.8)) 0%,
+    rgba(255, 255, 255, calc(var(--glow-intensity) * 0.4)) 30%,
+    transparent 60%
+  );
+  border-radius: inherit;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.magic-bento-card--border-glow:hover::after {
+  opacity: 1;
+}
+
+.magic-bento-card--border-glow:hover {
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    0 0 30px var(--white-glow);
+}
+
+.particle-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.particle::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.particle-container:hover {
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.2),
+    0 0 30px var(--white-glow);
+}
+
+/* Global spotlight styles */
+.global-spotlight {
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+  z-index: 200 !important;
+  pointer-events: none;
+}
+
+.bento-section {
+  position: relative;
+  user-select: none;
+}

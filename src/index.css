@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    /* Jesper-inspired dark theme */
+    /* Dark theme variables */
     --background: 0 0% 0%;
     --background-soft: 0 0% 3%;
     --background-muted: 0 0% 6%;
@@ -89,7 +89,7 @@
 
 @layer components {
 
-  /* Jesper-style display typography */
+  /* Display typography */
   .text-display {
     font-family: var(--font-display);
     font-weight: 400;
@@ -166,14 +166,14 @@
     filter: grayscale(100%);
   }
 
-  /* Service card Jesper style */
-  .service-card-jesper {
+  /* Service card style */
+  .service-card {
     @apply relative p-10 transition-all duration-500 cursor-pointer;
     background: hsl(var(--card));
     border: 1px solid hsl(var(--border));
   }
 
-  .service-card-jesper:hover {
+  .service-card:hover {
     background: hsl(var(--card-hover));
     color: hsl(var(--card-hover-foreground));
   }
@@ -215,6 +215,149 @@
     to {
       transform: rotate(360deg);
     }
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 20s linear infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes border-shine {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .animate-border-shine {
+    animation: border-shine 3s ease-in-out infinite;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 1),
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+    background-size: 400% 100%;
+    border-radius: 0;
+  }
+
+  @keyframes border-walk {
+    0% {
+      top: 0;
+      left: 0;
+    }
+    25% {
+      top: 0;
+      left: calc(100% - 3rem);
+    }
+    50% {
+      top: calc(100% - 1px);
+      left: calc(100% - 3rem);
+    }
+    75% {
+      top: calc(100% - 1px);
+      left: 0;
+    }
+    100% {
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .animate-border-walk {
+    animation: border-walk 4s linear infinite;
+  }
+
+  @keyframes border-top {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes border-right {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(100%);
+    }
+  }
+
+  @keyframes border-bottom {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes border-left {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(-100%);
+    }
+  }
+
+  .animate-border-top {
+    animation: border-top 2s linear infinite;
+  }
+
+  .animate-border-right {
+    animation: border-right 2s linear infinite;
+    animation-delay: 0.5s;
+  }
+
+  .animate-border-bottom {
+    animation: border-bottom 2s linear infinite;
+    animation-delay: 1s;
+  }
+
+  .animate-border-left {
+    animation: border-left 2s linear infinite;
+    animation-delay: 1.5s;
+  }
+
+  @keyframes sequential-border-animation {
+    0% {
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.8);
+    }
+    20% {
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8);
+    }
+    40% {
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+  }
+
+  .sequential-border-highlight {
+    animation: sequential-border-animation 12s infinite;
+    border-radius: 1.5rem;
   }
 
   /* Social links vertical */
@@ -281,6 +424,23 @@
     clip-path: inset(45% 0 45% 0);
     transition: clip-path 0.5s ease-out;
   }
+
+  /* Bento Grid Layout */
+  .bento-grid {
+    @apply grid auto-rows-[192px] gap-4;
+  }
+
+  .bento-grid > * {
+    @apply rounded-xl border border-border bg-background-muted p-6;
+  }
+
+  /* 
+    To use, apply 'bento-grid' to the container.
+    Then, in your HTML, use Tailwind's responsive grid classes on the children.
+    Example: <div class="bento-grid">
+               <div class="col-span-1 md:col-span-2">...</div>
+             </div>
+  */
 }
 
 @layer utilities {

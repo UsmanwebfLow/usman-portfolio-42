@@ -20,6 +20,8 @@ export function SpotlightCard({ children, className = "", delay = 0 }: { childre
             className={`group relative border border-white/10 bg-white/5 overflow-hidden rounded-3xl ${className}`}
             onMouseMove={handleMouseMove}
         >
+            {/* Sequential animated border will be controlled by parent components */}
+            
             <motion.div
                 className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition duration-300 group-hover:opacity-100"
                 style={{

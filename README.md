@@ -2,7 +2,7 @@
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+**URL**: https://lovable.dev/projects/your-actual-project-id
 
 ## How can I edit this code?
 
@@ -10,7 +10,7 @@ There are several ways of editing your application.
 
 **Use Lovable**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+Simply visit the [Lovable Project](https://lovable.dev/projects/your-actual-project-id) and start prompting.
 
 Changes made via Lovable will be committed automatically to this repo.
 
@@ -23,18 +23,40 @@ The only requirement is having Node.js & npm installed - [install with nvm](http
 Follow these steps:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Step 1: Clone the repository.
+git clone https://github.com/your-username/usman-portfolio-42.git
 
 # Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+cd usman-portfolio-42
 
-# Step 3: Install the necessary dependencies.
+# Step 3: Set up your environment variables.
+# Create a new file named .env in the root of your project.
+# Add the necessary Supabase variables. You can find these in your Supabase project settings.
+# VITE_SUPABASE_URL=https://your-project-ref.supabase.co
+# VITE_SUPABASE_ANON_KEY=your-public-anon-key
+
+# Step 4: Install the necessary dependencies.
 npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Step 5: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
+
+## Database Schema
+
+This project uses Supabase as its backend database with the following tables:
+
+1. **Contacts** - Stores contact form submissions
+2. **Projects** - Stores portfolio projects with title, description, images, and links
+3. **Testimonials** - Stores client testimonials with ratings and featured status
+
+### Supabase Functions
+
+- `submit-contact` - Handles contact form submissions
+- `chat` - Manages chat interactions
+- `manage-projects` - CRUD operations for portfolio projects (authenticated)
+
+The database migrations are stored in `supabase/migrations/` and can be applied using Supabase CLI.
 
 **Edit a file directly in GitHub**
 
@@ -62,7 +84,7 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+Simply open [Lovable](https://lovable.dev/projects/your-actual-project-id) and click on Share -> Publish.
 
 ## Can I connect a custom domain to my Lovable project?
 
@@ -71,3 +93,5 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+
+cd "d:\usman vibe coding\usman-portfolio-42"; npm run dev

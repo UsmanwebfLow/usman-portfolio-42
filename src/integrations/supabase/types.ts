@@ -44,6 +44,81 @@ export type Database = {
         }
         Relationships: []
       }
+      projects: {
+        Row: {
+          id: string
+          title: string
+          description: string | null
+          image_url: string | null
+          project_url: string | null
+          github_url: string | null
+          tags: string[] | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          title: string
+          description?: string | null
+          image_url?: string | null
+          project_url?: string | null
+          github_url?: string | null
+          tags?: string[] | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          title?: string
+          description?: string | null
+          image_url?: string | null
+          project_url?: string | null
+          github_url?: string | null
+          tags?: string[] | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          id: string
+          name: string
+          role: string | null
+          company: string | null
+          content: string
+          avatar_url: string | null
+          rating: number | null
+          featured: boolean | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          role?: string | null
+          company?: string | null
+          content: string
+          avatar_url?: string | null
+          rating?: number | null
+          featured?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          role?: string | null
+          company?: string | null
+          content?: string
+          avatar_url?: string | null
+          rating?: number | null
+          featured?: boolean | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

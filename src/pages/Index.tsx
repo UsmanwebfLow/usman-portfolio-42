@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Lenis from '@studio-freight/lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -18,14 +18,23 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Index() {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const radius = 22;
+  const circumference = 2 * Math.PI * radius;
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.0, // Reduced duration for faster scrolling
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       smoothWheel: true,
+      wheelMultiplier: 1.2, // Increased multiplier for more responsive scrolling
+      touchMultiplier: 2, // More responsive touch scrolling
+      infinite: false,
     });
+
+    // Expose lenis globally for use in other components
+    (window as any).lenis = lenis;
 
     lenis.on('scroll', () => {
       ScrollTrigger.update();
@@ -40,16 +49,46 @@ export default function Index() {
     }
     requestAnimationFrame(raf);
 
-    return () => lenis.destroy();
+    return () => {
+      (window as any).lenis = null;
+      lenis.destroy();
+    };
+  }, []);
+
+  useEffect(() => {
+    // Entrance animation after loader
+    if (containerRef.current) {
+      // Initial state - hidden
+      gsap.set(containerRef.current.children, { opacity: 0, y: 50 });
+      
+      // Staggered entrance animation
+      gsap.to(containerRef.current.children, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.1,
+        ease: "power2.out",
+        delay: 0.5 // Delay to allow loader to finish
+      });
+      
+      // Special animation for hero section
+      const heroSection = containerRef.current.querySelector('#hero-section');
+      if (heroSection) {
+        gsap.fromTo(heroSection, 
+          { scale: 0.9, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 1.5, ease: "elastic.out(1, 0.3)", delay: 0.3 }
+        );
+      }
+    }
   }, []);
 
   return (
-    <>
+    <div ref={containerRef}>
       <Navbar />
       
+      <HeroSection id="hero-section" />
+      
       <div id="scroll-container" className="relative">
-        <HeroSection />
-        
         <main className="relative z-10 bg-background">
           <AboutSection />
           <ServicesSection />
@@ -72,8 +111,8 @@ export default function Index() {
             stroke="hsl(0 0% 98%)"
             strokeWidth="1.5"
             strokeLinecap="round"
-            strokeDasharray={`${2 * Math.PI * 22}`}
-            strokeDashoffset={`${2 * Math.PI * 22 * (1 - scrollProgress)}`}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference * (1 - scrollProgress)}
             style={{ transform: 'rotate(-90deg)', transformOrigin: 'center' }}
           />
           <text x="25" y="28" textAnchor="middle" fill="hsl(0 0% 98%)" fontSize="9" fontFamily="Inter">
@@ -84,6 +123,6 @@ export default function Index() {
       
       {/* ChatBot */}
       <ChatBot />
-    </>
+    </div>
   );
 }

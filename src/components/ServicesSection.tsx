@@ -68,7 +68,7 @@ export default function ServicesSection() {
               return (
                 <motion.div
                   key={service.number}
-                  className="service-card-jesper flex-shrink-0 w-[400px] min-h-[480px] relative"
+                  className="service-card-jesper flex-shrink-0 w-[400px] min-h-[480px] relative p-8"
                   style={{ 
                     marginLeft: index === 0 ? 0 : '-180px',
                     zIndex: isActive ? 10 : index,
@@ -121,7 +121,7 @@ export default function ServicesSection() {
           {services.map((service, index) => (
             <motion.div
               key={service.number}
-              className="service-card-jesper"
+              className="service-card-jesper p-6"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
